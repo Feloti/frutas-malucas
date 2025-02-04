@@ -12,24 +12,24 @@ size = Vector2(84, 84)
 [node name="Main" type="Area2D"]
 script = ExtResource("1_akkna")
 
-[node name="return" type="Area2D" parent="."]
+[node name="Board" type="Area2D" parent="."]
 position = Vector2(3, 42)
 script = ExtResource("2_3yvai")
 
-[node name="Background" type="Sprite2D" parent="return"]
+[node name="Background" type="Sprite2D" parent="Board"]
 texture_filter = 1
 position = Vector2(75, 17)
 scale = Vector2(0.106, 0.106)
 texture = ExtResource("3_t0mri")
 script = SubResource("GDScript_8k6gi")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="return"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board"]
 position = Vector2(42, 42)
 shape = SubResource("RectangleShape2D_nq1ux")
 
-[node name="FundosPeca" type="Node2D" parent="return"]
+[node name="FundosPeca" type="Node2D" parent="Board"]
 
-[node name="Frutas" type="Node2D" parent="return"]
+[node name="Frutas" type="Node2D" parent="Board"]
 
 [node name="Character" type="Node2D" parent="."]
 position = Vector2(45, 20)

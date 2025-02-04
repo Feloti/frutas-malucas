@@ -11,6 +11,8 @@ script/source = "extends CharacterBody2D
 func _ready() -> void:
 	pass
 	
+func use_power() -> void:
+	print(\"Capuz\")
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5ga5h"]

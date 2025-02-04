@@ -10,6 +10,11 @@ func _ready() -> void:
 	#if Global.personagem_selecionado != null:
 	#	var spawn_point = $Character
 	
+	#var c = $Character
+	#print(c)
+	#for child in c.get_children():
+	#	print(child)
+	
 	# Adiciona o personagem como filho do spawn point
 	spawn_point.add_child(Global.personagem_selecionado)
 	username_space.add_child(Global.username)

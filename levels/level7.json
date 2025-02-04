@@ -1,1 +1,21 @@
-{}
+{
+	"size": 4,
+	"map": [
+		"Apple1", "Apple2", "Pear1",  "Apple3", 
+		"Banana1", "Pear2", "Empty", "Banana2",
+		"Banana3", "Grape1", "Grape2", "Pear3", 
+		"Banana4", "Grape3", "Apple4", "Grape4"
+	],
+	"solved": [
+		["Apple1", "Apple2", "Apple3", "Apple4"],
+		["Grape1", "Grape2", "Grape3", "Grape4"],
+		["Banana1", "Banana2", "Banana3", "Banana4"],
+		["Pear1", "Pear2", "Pear3", "Empty"]
+	],
+	"restrictions": [
+		"free", "vertical_locked", "free", "locked",
+		"free", "free", "free", "free",
+		"free", "free", "free", "free",
+		"vertical_locked", "locked", "free", "free"
+	],
+}

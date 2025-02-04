@@ -1,0 +1,153 @@
+[gd_scene load_steps=14 format=3 uid="uid://c0lioeafqocdo"]
+
+[ext_resource type="Script" path="res://scripts/scrollContainer.gd" id="1_2qmvg"]
+[ext_resource type="Script" path="res://scripts/SelectLevelCollision.gd" id="1_gfs2k"]
+[ext_resource type="Script" path="res://scripts/SelectLevel.gd" id="1_kqe0w"]
+[ext_resource type="Texture2D" uid="uid://iyfhf61ospoa" path="res://sprites/PathLevel/path03.png" id="2_va3ye"]
+[ext_resource type="Texture2D" uid="uid://borb4fo03xbct" path="res://sprites/PathLevel/path02.png" id="3_wsisv"]
+[ext_resource type="Texture2D" uid="uid://oooil3wqsujd" path="res://sprites/PathLevel/path01.png" id="4_vdgqw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gxon2"]
+radius = 6.79569
+height = 18.0668
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_koexe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85a7c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_46c1b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i6y0s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ip6bt"]
+
+[sub_resource type="Theme" id="Theme_xymsr"]
+VScrollBar/styles/grabber = SubResource("StyleBoxEmpty_koexe")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxEmpty_85a7c")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxEmpty_46c1b")
+VScrollBar/styles/scroll = SubResource("StyleBoxEmpty_i6y0s")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_ip6bt")
+
+[node name="Select" type="Area2D"]
+scale = Vector2(1.01754, 1.0332)
+script = ExtResource("1_kqe0w")
+
+[node name="SelectLevels" type="Node2D" parent="."]
+script = ExtResource("1_gfs2k")
+
+[node name="Level01" type="Area2D" parent="SelectLevels"]
+
+[node name="Collision" type="CollisionShape2D" parent="SelectLevels/Level01"]
+position = Vector2(53.0692, 129.694)
+scale = Vector2(1.88, 0.642857)
+shape = SubResource("CapsuleShape2D_gxon2")
+
+[node name="Level02" type="Area2D" parent="SelectLevels"]
+
+[node name="Collision" type="CollisionShape2D" parent="SelectLevels/Level02"]
+position = Vector2(33.4139, 95.8188)
+rotation = -0.0827796
+scale = Vector2(1.88, 0.642857)
+shape = SubResource("CapsuleShape2D_gxon2")
+
+[node name="Level03" type="Area2D" parent="SelectLevels"]
+rotation = -0.0103048
+
+[node name="Collision" type="CollisionShape2D" parent="SelectLevels/Level03"]
+position = Vector2(53.4407, 59.5937)
+rotation = 0.0064698
+scale = Vector2(1.88, 0.642857)
+shape = SubResource("CapsuleShape2D_gxon2")
+
+[node name="Level04" type="Area2D" parent="SelectLevels"]
+rotation = -0.0103048
+
+[node name="Collision" type="CollisionShape2D" parent="SelectLevels/Level04"]
+position = Vector2(30.2645, 19.6702)
+rotation = -0.0715104
+scale = Vector2(1.88, 0.642857)
+shape = SubResource("CapsuleShape2D_gxon2")
+
+[node name="Level05" type="Area2D" parent="SelectLevels"]
+rotation = -0.0103048
+
+[node name="Collision" type="CollisionShape2D" parent="SelectLevels/Level05"]
+position = Vector2(64.8, -18)
+rotation = -0.0715104
+scale = Vector2(1.88, 0.642857)
+shape = SubResource("CapsuleShape2D_gxon2")
+
+[node name="Level06" type="Area2D" parent="SelectLevels"]
+rotation = -0.0103048
+
+[node name="Collision" type="CollisionShape2D" parent="SelectLevels/Level06"]
+position = Vector2(32.0819, -60.6256)
+rotation = -0.0715104
+scale = Vector2(1.88, 0.642857)
+shape = SubResource("CapsuleShape2D_gxon2")
+
+[node name="Level07" type="Area2D" parent="SelectLevels"]
+rotation = -0.0103048
+
+[node name="Collision" type="CollisionShape2D" parent="SelectLevels/Level07"]
+position = Vector2(52.1981, -105.956)
+rotation = -0.0715104
+scale = Vector2(1.88, 0.642857)
+shape = SubResource("CapsuleShape2D_gxon2")
+
+[node name="Level08" type="Area2D" parent="SelectLevels"]
+
+[node name="Collision" type="CollisionShape2D" parent="SelectLevels/Level08"]
+position = Vector2(30.4655, -154.843)
+rotation = -0.349066
+scale = Vector2(1.88, 0.642857)
+shape = SubResource("CapsuleShape2D_gxon2")
+
+[node name="Level09" type="Area2D" parent="SelectLevels"]
+rotation = -0.0103048
+
+[node name="Collision" type="CollisionShape2D" parent="SelectLevels/Level09"]
+position = Vector2(53.2253, -205.618)
+rotation = -0.0715104
+scale = Vector2(1.88, 0.642857)
+shape = SubResource("CapsuleShape2D_gxon2")
+
+[node name="Level10" type="Area2D" parent="SelectLevels"]
+rotation = -0.0103048
+
+[node name="Collision" type="CollisionShape2D" parent="SelectLevels/Level10"]
+position = Vector2(24.2027, -250.419)
+rotation = -0.0715104
+scale = Vector2(1.88, 0.642857)
+shape = SubResource("CapsuleShape2D_gxon2")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+offset_right = 90.0
+offset_bottom = 160.0
+size_flags_vertical = 3
+theme = SubResource("Theme_xymsr")
+horizontal_scroll_mode = 0
+script = ExtResource("1_2qmvg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="PathPart3" type="TextureRect" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_va3ye")
+expand_mode = 5
+
+[node name="PathPart2" type="TextureRect" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_wsisv")
+expand_mode = 5
+
+[node name="PathPart1" type="TextureRect" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_vdgqw")
+expand_mode = 5

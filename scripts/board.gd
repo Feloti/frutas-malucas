@@ -28,7 +28,8 @@ func _ready() -> void:
 
 func start_game() -> void:
 	#Le informações do nivel do level{i}.json
-	var file:FileAccess = FileAccess.open("res://levels/level5.json", FileAccess.READ)
+	var level = "res://levels/level%s.json" % Global.current_level
+	var file:FileAccess = FileAccess.open(level, FileAccess.READ)
 	var text:String = file.get_as_text()
 	var data:Dictionary = JSON.parse_string(text)
 
