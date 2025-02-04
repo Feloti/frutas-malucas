@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgtvqvib7cxd4"]
+[gd_scene load_steps=3 format=3 uid="uid://cgtvqvib7cxd4"]
 
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_vta66"]
+[ext_resource type="Texture2D" uid="uid://ddf7obwccggcj" path="res://sprites/frutas malucas BK.jpeg" id="2_h6fco"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -32,6 +33,12 @@ text = "Options"
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
+
+[node name="FrutasMalucasBk" type="Sprite2D" parent="."]
+show_behind_parent = true
+position = Vector2(45.25, 80.125)
+scale = Vector2(0.0874023, 0.156006)
+texture = ExtResource("2_h6fco")
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
