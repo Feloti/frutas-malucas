@@ -3,6 +3,8 @@ extends Area2D
 @onready var spawn_point = $Character
 @onready var username_space = $Username
 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	MusicGame.play_music_level()
@@ -15,17 +17,25 @@ func _ready() -> void:
 	#for child in c.get_children():
 	#	print(child)
 	
+	#Remove nós de antigas chamadas
+	if spawn_point.has_node("Player"):
+		spawn_point.get_node("Player").queue_free()
+	if username_space.has_node("Username"):
+		spawn_point.get_node("Username").queue_free()
+	
+	var character_scene: PackedScene = load(Global.characters[Global.selected_character])
+	var character_instance:CharacterBody2D = character_scene.instantiate()
+	spawn_point.add_child(character_instance)
 
-	if spawn_point.has_node("Personagem"):  # Verifica por nome
-		spawn_point.get_node("Personagem").queue_free()
-
-	# Limpar username anterior
-	if username_space.has_node("LabelUsername"):
-		username_space.get_node("LabelUsername").queue_free()
-		
-	# Adiciona o personagem como filho do spawn point
-	spawn_point.add_child(Global.personagem_selecionado)
-	username_space.add_child(Global.username)
+	#Todo: Estilizar e mudar label para cena própria
+	var label_username = Label.new()
+	label_username.text = Global.username
+	label_username.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label_username.size = Vector2(40, 23)
+	label_username.scale = Vector2(0.3, 0.3)
+	label_username.name = "Username"
+	
+	username_space.add_child(label_username)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

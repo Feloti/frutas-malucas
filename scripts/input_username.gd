@@ -11,6 +11,5 @@ func _process(delta: float) -> void:
 
 
 func _on_button_pressed() -> void:
-	$Label.text = $UsernameInput.text.strip_edges()
-	Global.username = $Label.duplicate()
+	Global.username =  $UsernameInput.text.strip_edges()
 	get_tree().change_scene_to_file("res://scenes/selection.tscn")
