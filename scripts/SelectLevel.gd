@@ -56,3 +56,10 @@ func create_leaves_sprites():
 		add_child(leaf)
 		node_leaves.append(leaf)
 		collision_shapes[i]["node"].disabled = true
+
+
+func _on_return_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/menu.tscn")
+
+func _on_config_button_pressed() -> void:
+	pass

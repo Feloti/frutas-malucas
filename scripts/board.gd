@@ -3,7 +3,7 @@ extends Area2D
 #OBS: Precisa generalizar para funcionar em tabuleiros 3x3, 4x4, 5x5
 
 const BOARD_OFFSET_X: int = 3 #Espaço da borda da tela
-const BOARD_OFFSET_Y: int = 42
+const BOARD_OFFSET_Y: int = 52
 const BOARD_SIZE: int = 84
 const TILES_COLORS = [Color(1.0, 0.0, 0.0), Color(1.0, 0.0, 1.0), Color(1.0, 1.0, 0.0),
  Color(0.0, 1.0, 0.0), Color(1.0, 0.67, 0.11)]

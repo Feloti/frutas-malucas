@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://o3ngn8x5fefs"]
+[gd_scene load_steps=8 format=3 uid="uid://o3ngn8x5fefs"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_akkna"]
 [ext_resource type="Script" path="res://scripts/board.gd" id="2_3yvai"]
 [ext_resource type="Texture2D" uid="uid://nhwrnx1rcv5b" path="res://back20por9.jpg" id="3_t0mri"]
+[ext_resource type="Texture2D" uid="uid://36ktqh8o6dl5" path="res://sprites/UI/arrow.png" id="4_mlfks"]
+[ext_resource type="Texture2D" uid="uid://bw0pcj051th17" path="res://sprites/UI/options-button_active.png" id="5_0474p"]
 
 [sub_resource type="GDScript" id="GDScript_8k6gi"]
 
@@ -13,7 +15,7 @@ size = Vector2(84, 84)
 script = ExtResource("1_akkna")
 
 [node name="Board" type="Area2D" parent="."]
-position = Vector2(3, 42)
+position = Vector2(3, 52)
 script = ExtResource("2_3yvai")
 
 [node name="Background" type="Sprite2D" parent="Board"]
@@ -32,7 +34,43 @@ shape = SubResource("RectangleShape2D_nq1ux")
 [node name="Frutas" type="Node2D" parent="Board"]
 
 [node name="Character" type="Node2D" parent="."]
-position = Vector2(45, 20)
+position = Vector2(45, 30)
 
 [node name="Username" type="Node2D" parent="."]
 position = Vector2(36, 1)
+
+[node name="Buttons" type="Node2D" parent="."]
+
+[node name="ReturnShade" type="Sprite2D" parent="Buttons"]
+modulate = Color(0, 0, 0, 0.278431)
+texture_filter = 1
+position = Vector2(8.25, 8)
+scale = Vector2(0.023, 0.023)
+texture = ExtResource("4_mlfks")
+
+[node name="ReturnButton" type="TextureButton" parent="Buttons"]
+texture_filter = 1
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 515.0
+offset_bottom = 515.0
+scale = Vector2(0.02, 0.02)
+texture_normal = ExtResource("4_mlfks")
+
+[node name="ConfigShade" type="Sprite2D" parent="Buttons"]
+modulate = Color(0, 0, 0, 0.278431)
+texture_filter = 1
+position = Vector2(80, 7)
+scale = Vector2(0.023, 0.023)
+texture = ExtResource("5_0474p")
+
+[node name="ConfigButton" type="TextureButton" parent="Buttons"]
+texture_filter = 1
+offset_left = 75.0
+offset_top = 2.0
+offset_right = 587.0
+offset_bottom = 514.0
+scale = Vector2(0.02, 0.02)
+texture_normal = ExtResource("5_0474p")
+
+[connection signal="pressed" from="Buttons/ReturnButton" to="." method="_on_return_button_pressed"]
