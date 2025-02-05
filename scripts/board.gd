@@ -268,7 +268,8 @@ func handle_mouse_click(mouse_position: Vector2) -> void:
 func is_solved() -> bool:
 	var aux: Array = []
 	var actual_rows: Array = []
-
+	Global.coins += 10
+	#adiciona 10 moedas ao terminar a fase atual 
 	#Verifica se o espaço vazio está na ultima posição(canto inferior direito) (verificação mais rapida)
 	if find_empty() != tile_count - 1:
 		return false
