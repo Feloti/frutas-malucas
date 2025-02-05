@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cgtvqvib7cxd4"]
+[gd_scene load_steps=6 format=3 uid="uid://cgtvqvib7cxd4"]
 
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_vta66"]
 [ext_resource type="Texture2D" uid="uid://ddf7obwccggcj" path="res://sprites/frutas malucas BK.jpeg" id="2_h6fco"]
+[ext_resource type="Texture2D" uid="uid://cex8lelhvew77" path="res://sprites/UI/quit-button.png" id="3_1r4un"]
+[ext_resource type="Texture2D" uid="uid://bw0pcj051th17" path="res://sprites/UI/options-button_active.png" id="3_vuifw"]
+[ext_resource type="Texture2D" uid="uid://3hp2fc78f0mg" path="res://sprites/UI/play-button.png" id="5_mk44l"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -12,34 +15,63 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vta66")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 31.0
-offset_right = 79.0
-offset_bottom = 132.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-
-[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Play"
-
-[node name="Options" type="Button" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Options"
-
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Quit"
-
 [node name="FrutasMalucasBk" type="Sprite2D" parent="."]
 show_behind_parent = true
+texture_filter = 1
 position = Vector2(45.25, 80.125)
 scale = Vector2(0.0874023, 0.156006)
 texture = ExtResource("2_h6fco")
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[node name="Buttons" type="Node2D" parent="."]
+
+[node name="ConfigShade" type="Sprite2D" parent="Buttons"]
+modulate = Color(0, 0, 0, 0.278431)
+texture_filter = 1
+position = Vector2(77, 13.5)
+scale = Vector2(0.042, 0.042)
+texture = ExtResource("3_vuifw")
+
+[node name="ConfigButton" type="TextureButton" parent="Buttons"]
+texture_filter = 1
+offset_left = 67.0
+offset_top = 3.0
+offset_right = 579.0
+offset_bottom = 515.0
+scale = Vector2(0.04, 0.04)
+texture_normal = ExtResource("3_vuifw")
+
+[node name="QuitShade" type="Sprite2D" parent="Buttons"]
+modulate = Color(0, 0, 0, 0.278431)
+position = Vector2(13, 13.5)
+scale = Vector2(0.042, 0.042)
+texture = ExtResource("3_1r4un")
+
+[node name="QuitButton" type="TextureButton" parent="Buttons"]
+texture_filter = 1
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 515.0
+offset_bottom = 515.0
+scale = Vector2(0.04, 0.04)
+texture_normal = ExtResource("3_1r4un")
+
+[node name="PlayShade" type="Sprite2D" parent="Buttons"]
+modulate = Color(0, 0, 0, 0.278431)
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(44.5, 128)
+scale = Vector2(0.094, 0.094)
+texture = ExtResource("5_mk44l")
+
+[node name="PlayButton" type="TextureButton" parent="Buttons"]
+texture_filter = 1
+offset_left = 10.0
+offset_top = 117.0
+offset_right = 778.0
+offset_bottom = 366.0
+scale = Vector2(0.09, 0.09)
+texture_normal = ExtResource("5_mk44l")
+
+[connection signal="pressed" from="Buttons/ConfigButton" to="." method="_on_config_button_pressed"]
+[connection signal="pressed" from="Buttons/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="Buttons/PlayButton" to="." method="_on_play_button_pressed"]
