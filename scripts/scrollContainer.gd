@@ -8,7 +8,7 @@ func _ready() -> void:
 func init_scroll():
 	#Move o scroll para o inicio dos niveis 
 	#TODO: Calcular a posição com base no ultimo nivel que o jogador parou
-	var v_scroll = get_v_scroll_bar()
+	var v_scroll:VScrollBar = get_v_scroll_bar()
 	v_scroll.allow_greater = true
 	v_scroll.set_value_no_signal(320.0)
 
