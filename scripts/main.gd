@@ -15,6 +15,14 @@ func _ready() -> void:
 	#for child in c.get_children():
 	#	print(child)
 	
+
+	if spawn_point.has_node("Personagem"):  # Verifica por nome
+		spawn_point.get_node("Personagem").queue_free()
+
+	# Limpar username anterior
+	if username_space.has_node("LabelUsername"):
+		username_space.get_node("LabelUsername").queue_free()
+		
 	# Adiciona o personagem como filho do spawn point
 	spawn_point.add_child(Global.personagem_selecionado)
 	username_space.add_child(Global.username)

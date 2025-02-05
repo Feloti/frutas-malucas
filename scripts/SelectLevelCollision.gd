@@ -11,3 +11,5 @@ func _on_level_clicked(viewport, event, shape_idx, level_id):
 		#Define o valor da váriavel global que é usado em board.gd para montar o tabuleiro
 		Global.current_level = level_id
 		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		
+		

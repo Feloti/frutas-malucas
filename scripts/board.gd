@@ -258,7 +258,12 @@ func handle_mouse_click(mouse_position: Vector2) -> void:
 
 	if is_solved():
 		print("Resolvido")
-		shuffle_tiles()
+		
+		#Evita que ao completar novamente niveis mais baixo libere os mais acima
+		if Global.current_level - 1 == Global.higher_level_completed:
+			Global.higher_level_completed += 1
+		get_tree().change_scene_to_file("res://scenes/level_map.tscn")
+		#shuffle_tiles()
 
 func is_solved() -> bool:
 	var aux: Array = []
@@ -276,8 +281,6 @@ func is_solved() -> bool:
 			actual_rows.append(aux)
 			aux = []
 	
-	print(actual_rows)
-	#print(solved_rows)
 	"""Diferente do 15tile padrão que a ordem é numérica de 1a16, aqui precisa
 	estar apenas com cada elemento na sua linha correta sem importar a coluna"""
 	for i in range(0, actual_rows.size()):

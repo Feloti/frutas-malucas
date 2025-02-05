@@ -2,7 +2,7 @@ extends Area2D
 
 @onready var scroll_container: ScrollContainer = $ScrollContainer
 
-var open_levels = 10 - Global.higher_level_completed + 1 #10 = Quantidade de niveis
+var total_levels = 10
 var scroll_till_bottom = 160 * 2 #Tamanho da tela vertical * numero de telas extras
 var sprite_leaf = load("res://sprites/Others/fallen_leaves.png")
 var collision_shapes = []
@@ -19,33 +19,40 @@ func _ready() -> void:
 		"original_y": collision.position.y
 		})
 	
-	create_leaves_sprites(open_levels)
+	create_leaves_sprites()
 	
 	# Conecta o sinal de scroll
-	var v_scroll = scroll_container.get_v_scroll_bar()
+	var v_scroll:VScrollBar = scroll_container.get_v_scroll_bar()
 	v_scroll.value_changed.connect(_update_collisions_positions)
 
 func _update_collisions_positions(scroll_value: float) -> void:
-	var i = -Global.higher_level_completed
-	for entry in collision_shapes:
-		#Altera a posição do nó de acordo com o valor atual de scroll
-		entry.node.position.y = entry["original_y"] + scroll_till_bottom - scroll_value
-		node_leaves[i].position.y = entry["original_y"] + scroll_till_bottom - scroll_value
-		i += 1
+	for i in range(collision_shapes.size()):
+		collision_shapes[i].node.position.y = collision_shapes[i]["original_y"] + scroll_till_bottom - scroll_value
+	
+	for leaf in node_leaves:
+		var collision_index = leaf.get_meta("collision_index")
+		leaf.position.y = collision_shapes[collision_index]["original_y"] + scroll_till_bottom - scroll_value
 
 func _process(delta: float) -> void:
 	pass
 	
-func create_leaves_sprites(levels_count: int):
-	for i in range(Global.higher_level_completed, open_levels):
+func create_leaves_sprites():
+	#Elimina os sprite de chamadas anteriores da cena
+	for leaf in node_leaves:
+		leaf.queue_free()
+	node_leaves.clear()
+	
+	# Cria folhas apenas para níveis bloqueados
+	var first_blocked_level = Global.higher_level_completed + 1
+	for i in range(first_blocked_level, collision_shapes.size()):
 		var leaf:Sprite2D = Sprite2D.new()
-		var leaf_x:float = collision_shapes[i]["original_x"]
-		var leaf_y:float = collision_shapes[i]["original_y"]
-		
 		leaf.texture = sprite_leaf
 		leaf.scale = Vector2(0.06, 0.06)
-		leaf.position = Vector2(leaf_x, leaf_y)
-		collision_shapes[i]["node"].disabled = true
-		
+		leaf.position = Vector2(
+			collision_shapes[i]["original_x"],
+			collision_shapes[i]["original_y"]
+		)
+		leaf.set_meta("collision_index", i)
 		add_child(leaf)
-		node_leaves.append(leaf) 
+		node_leaves.append(leaf)
+		collision_shapes[i]["node"].disabled = true
