@@ -115,7 +115,6 @@ func adjust_background() -> void:
 	var offset_y: float = (screen_size.y - texture_size.y * scale_factor) / 2
 	background.position = Vector2(offset_x + 40, offset_y + 28)
 	#background.position = Vector2(offset_x + 42, offset_y + 58)
-
 func instantiate_fences(restrictions: Array) -> void:
 	#Dependendo do tipo de restrição instancia a cena da cerca
 	var scene: PackedScene
@@ -259,17 +258,17 @@ func handle_mouse_click(mouse_position: Vector2) -> void:
 
 	if is_solved():
 		print("Resolvido")
-		
+		Global.Coins +=10
+		#gera 10 moedas assim que o player acabar a fase
 		#Evita que ao completar novamente niveis mais baixo libere os mais acima
 		if Global.current_level - 1 == Global.higher_level_completed:
 			Global.higher_level_completed += 1
-		get_tree().change_scene_to_file("res://scenes/level_map.tscn")
+		get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
 		#shuffle_tiles()
 
 func is_solved() -> bool:
 	var aux: Array = []
 	var actual_rows: Array = []
-
 	#Verifica se o espaço vazio está na ultima posição(canto inferior direito) (verificação mais rapida)
 	if find_empty() != tile_count - 1:
 		return false

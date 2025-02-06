@@ -11,6 +11,7 @@ func init_scroll():
 	var v_scroll:VScrollBar = get_v_scroll_bar()
 	v_scroll.allow_greater = true
 	v_scroll.set_value_no_signal(320.0)
+	v_scroll.allow_greater = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

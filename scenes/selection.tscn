@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://0mlmgp1fuime"]
+[gd_scene load_steps=12 format=3 uid="uid://0mlmgp1fuime"]
 
 [ext_resource type="Script" path="res://sprites/Tiles/select.gd" id="1_61ffd"]
 [ext_resource type="PackedScene" uid="uid://cqmd1qmmodljl" path="res://actors/capuz.tscn" id="1_fiabd"]
 [ext_resource type="PackedScene" uid="uid://bh6p3mk2qusbn" path="res://actors/owlet.tscn" id="2_awmdx"]
+[ext_resource type="Texture2D" uid="uid://jhwnv2cm0kis" path="res://sprites/BG/SelectionBG.jpeg" id="2_l2s32"]
 [ext_resource type="Texture2D" uid="uid://chjospyhrxfhj" path="res://sprites/Bordas.png" id="2_x25if"]
 [ext_resource type="Script" path="res://scripts/owlet.gd" id="5_m2iue"]
 
@@ -33,6 +34,7 @@ size = Vector2(37, 36)
 script = ExtResource("1_61ffd")
 
 [node name="1" type="Area2D" parent="."]
+position = Vector2(-3, 30)
 
 [node name="Border" type="AnimatedSprite2D" parent="1"]
 texture_filter = 1
@@ -47,7 +49,17 @@ position = Vector2(26, 80)
 position = Vector2(25.5, 80.5)
 shape = SubResource("RectangleShape2D_r5yo7")
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="1"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="1/ParallaxBackground"]
+
+[node name="SelectionBg" type="Sprite2D" parent="1/ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
+position = Vector2(46, 81)
+texture = ExtResource("2_l2s32")
+
 [node name="2" type="Area2D" parent="."]
+position = Vector2(-1, 30)
 script = SubResource("GDScript_ryvyu")
 
 [node name="Border" type="AnimatedSprite2D" parent="2"]

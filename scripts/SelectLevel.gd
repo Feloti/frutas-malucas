@@ -1,6 +1,7 @@
 extends Area2D
 
 @onready var scroll_container: ScrollContainer = $ScrollContainer
+@onready var CoinsCounter = $CoinsCounter
 
 var total_levels = 10
 var scroll_till_bottom = 160 * 2 #Tamanho da tela vertical * numero de telas extras
@@ -24,7 +25,9 @@ func _ready() -> void:
 	# Conecta o sinal de scroll
 	var v_scroll:VScrollBar = scroll_container.get_v_scroll_bar()
 	v_scroll.value_changed.connect(_update_collisions_positions)
-
+	
+	CoinsCounter.text = str(Global.Coins)
+	#faz o label receber o valor das moedas
 func _update_collisions_positions(scroll_value: float) -> void:
 	for i in range(collision_shapes.size()):
 		collision_shapes[i].node.position.y = collision_shapes[i]["original_y"] + scroll_till_bottom - scroll_value
