@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://c0lioeafqocdo"]
+[gd_scene load_steps=35 format=3 uid="uid://c0lioeafqocdo"]
 
 [ext_resource type="Script" path="res://scripts/scrollContainer.gd" id="1_2qmvg"]
 [ext_resource type="Script" path="res://scripts/SelectLevelCollision.gd" id="1_gfs2k"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://36ktqh8o6dl5" path="res://sprites/UI/arrow.png" id="7_5574j"]
 [ext_resource type="Texture2D" uid="uid://bw0pcj051th17" path="res://sprites/UI/options-button_active.png" id="8_2yejq"]
 [ext_resource type="FontFile" uid="uid://dfq04ir5jmgnm" path="res://fonts/PixelOperator8-Bold.ttf" id="9_6un7u"]
+[ext_resource type="Texture2D" uid="uid://c6v2gr5ugto5m" path="res://sprites/UI/shop-button.png" id="9_obsiw"]
 [ext_resource type="Texture2D" uid="uid://dg2fxq1v4w0iv" path="res://sprites/UI/coin1_16x16.png" id="10_fwub2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gxon2"]
@@ -303,12 +304,28 @@ offset_bottom = 515.0
 scale = Vector2(0.04, 0.04)
 texture_normal = ExtResource("8_2yejq")
 
+[node name="ConfigShade2" type="Sprite2D" parent="Buttons"]
+modulate = Color(0, 0, 0, 0.278431)
+texture_filter = 1
+position = Vector2(76, 141.309)
+scale = Vector2(0.039, 0.039)
+texture = ExtResource("9_obsiw")
+
+[node name="TextureButton" type="TextureButton" parent="Buttons"]
+texture_filter = 1
+offset_left = 65.2172
+offset_top = 130.0
+offset_right = 673.217
+offset_bottom = 737.0
+scale = Vector2(0.038, 0.038)
+texture_normal = ExtResource("9_obsiw")
+
 [node name="CoinsCounter" type="RichTextLabel" parent="."]
 texture_filter = 1
-offset_left = 23.5863
-offset_top = 137.437
-offset_right = 63.5863
-offset_bottom = 177.437
+offset_left = 19.6552
+offset_top = 138.405
+offset_right = 59.6552
+offset_bottom = 178.405
 scale = Vector2(0.899911, 0.893228)
 size_flags_vertical = 8
 theme_override_fonts/normal_font = ExtResource("9_6un7u")
@@ -317,10 +334,12 @@ theme_override_font_sizes/normal_font_size = 13
 text = "000"
 
 [node name="CoinsAnim" type="AnimatedSprite2D" parent="."]
-position = Vector2(12.7759, 142.276)
+texture_filter = 1
+position = Vector2(10.8104, 144.212)
 sprite_frames = SubResource("SpriteFrames_m4x05")
 autoplay = "default"
 frame_progress = 0.932904
 
 [connection signal="pressed" from="Buttons/ReturnButton" to="." method="_on_return_button_pressed"]
 [connection signal="pressed" from="Buttons/ConfigButton" to="." method="_on_config_button_pressed"]
+[connection signal="pressed" from="Buttons/TextureButton" to="." method="_on_texture_button_pressed"]
