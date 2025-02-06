@@ -2,9 +2,9 @@ extends Area2D
 
 #OBS: Precisa generalizar para funcionar em tabuleiros 3x3, 4x4, 5x5
 
-const BOARD_OFFSET_X: int = 3 #Espaço da borda da tela
+const BOARD_OFFSET_X: int = 5 #Espaço da borda da tela
 const BOARD_OFFSET_Y: int = 52
-const BOARD_SIZE: int = 84
+const BOARD_SIZE: int = 80
 const TILES_COLORS = [Color(1.0, 0.0, 0.0), Color(1.0, 0.0, 1.0), Color(1.0, 1.0, 0.0),
  Color(0.0, 1.0, 0.0), Color(1.0, 0.67, 0.11)]
 # Carrega as frutas e os fundos
@@ -113,7 +113,8 @@ func adjust_background() -> void:
 	# Ajustar a posição do sprite para manter o fundo centralizado
 	var offset_x: float = (screen_size.x - texture_size.x * scale_factor) / 2
 	var offset_y: float = (screen_size.y - texture_size.y * scale_factor) / 2
-	background.position = Vector2(offset_x + 42, offset_y + 58)
+	background.position = Vector2(offset_x + 40, offset_y + 28)
+	#background.position = Vector2(offset_x + 42, offset_y + 58)
 
 func instantiate_fences(restrictions: Array) -> void:
 	#Dependendo do tipo de restrição instancia a cena da cerca

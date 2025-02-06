@@ -2,7 +2,7 @@ extends Node
 
 var selected_character = 1
 var username = ""
-var current_level = 1
+var current_level = 5
 var higher_level_completed = 0
 
 var characters = {

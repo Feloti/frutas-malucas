@@ -1,29 +1,48 @@
-[gd_scene load_steps=8 format=3 uid="uid://o3ngn8x5fefs"]
+[gd_scene load_steps=10 format=3 uid="uid://o3ngn8x5fefs"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_akkna"]
 [ext_resource type="Script" path="res://scripts/board.gd" id="2_3yvai"]
-[ext_resource type="Texture2D" uid="uid://nhwrnx1rcv5b" path="res://back20por9.jpg" id="3_t0mri"]
+[ext_resource type="Texture2D" uid="uid://c0mr8na1f4rde" path="res://sprites/UI/background_level.jpg" id="4_cdo0p"]
 [ext_resource type="Texture2D" uid="uid://36ktqh8o6dl5" path="res://sprites/UI/arrow.png" id="4_mlfks"]
 [ext_resource type="Texture2D" uid="uid://bw0pcj051th17" path="res://sprites/UI/options-button_active.png" id="5_0474p"]
+[ext_resource type="Texture2D" uid="uid://b0rcetexgbwam" path="res://sprites/BordasMarrom.png" id="7_w6lha"]
 
-[sub_resource type="GDScript" id="GDScript_8k6gi"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctaqn"]
+atlas = ExtResource("7_w6lha")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mvj11"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctaqn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nq1ux"]
-size = Vector2(84, 84)
+size = Vector2(80, 80)
 
 [node name="Main" type="Area2D"]
 script = ExtResource("1_akkna")
 
 [node name="Board" type="Area2D" parent="."]
-position = Vector2(3, 52)
+position = Vector2(5, 52)
 script = ExtResource("2_3yvai")
 
 [node name="Background" type="Sprite2D" parent="Board"]
 texture_filter = 1
-position = Vector2(75, 17)
-scale = Vector2(0.106, 0.106)
-texture = ExtResource("3_t0mri")
-script = SubResource("GDScript_8k6gi")
+position = Vector2(74, 33)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("4_cdo0p")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Board"]
+texture_filter = 1
+position = Vector2(40.4, 41.1)
+scale = Vector2(1.58, 1.58)
+sprite_frames = SubResource("SpriteFrames_mvj11")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Board"]
 position = Vector2(42, 42)
