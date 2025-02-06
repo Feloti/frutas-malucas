@@ -45,6 +45,7 @@ func create_leaves_sprites():
 		leaf.queue_free()
 	node_leaves.clear()
 	
+	var leaves:Node2D =$Leaves	
 	# Cria folhas apenas para níveis bloqueados
 	var first_blocked_level = Global.higher_level_completed + 1
 	for i in range(first_blocked_level, collision_shapes.size()):
@@ -56,7 +57,7 @@ func create_leaves_sprites():
 			collision_shapes[i]["original_y"]
 		)
 		leaf.set_meta("collision_index", i)
-		add_child(leaf)
+		leaves.add_child(leaf)
 		node_leaves.append(leaf)
 		collision_shapes[i]["node"].disabled = true
 

@@ -270,6 +270,8 @@ layout_mode = 2
 texture = ExtResource("4_vdgqw")
 expand_mode = 5
 
+[node name="Leaves" type="Node2D" parent="."]
+
 [node name="Buttons" type="Node2D" parent="."]
 
 [node name="ReturnShade" type="Sprite2D" parent="Buttons"]
@@ -328,6 +330,7 @@ offset_right = 59.6552
 offset_bottom = 178.405
 scale = Vector2(0.899911, 0.893228)
 size_flags_vertical = 8
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("9_6un7u")
 theme_override_font_sizes/bold_italics_font_size = 1
 theme_override_font_sizes/normal_font_size = 13
