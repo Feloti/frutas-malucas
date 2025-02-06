@@ -48,18 +48,6 @@ func start_game() -> void:
 	#Ajusta local da peças, já que a escala aumenta o tamanho da peças em todos sentidos
 	var tile_offset:float = 42 / grid_size 
 	
-	#Instacia cada fundo
-	for i in range(grid_size):
-		for j in range(grid_size):
-			var background_instance: Sprite2D
-			background_instance = BACKGROUND_SCENE.instantiate()
-			background_instance.scale = Vector2(scale_tile, scale_tile)
-			
-			#Muda a cor do fundo de acordo com  a linha atual
-			background_instance.modulate = TILES_COLORS[i] 
-			background_instance.position = Vector2((tile_size * j + tile_offset), tile_size * i + tile_offset)
-			backgrounds_parent.add_child(background_instance)
-	
 	#Instacia os sprites da fruta
 	for i in range(tile_count):
 		var fruit_instance:Sprite2D = FRUIT_SCENE.instantiate()
@@ -83,6 +71,22 @@ func start_game() -> void:
 		
 		tiles.append(fruit_instance) #Adiciona a instacia no array do estado atual do board
 		fruits_parent.add_child(fruit_instance)
+		
+	#Instacia cada fundo
+	for i in range(grid_size):
+		for j in range(grid_size):
+			var background_instance: Sprite2D
+			background_instance = BACKGROUND_SCENE.instantiate()
+			background_instance.scale = Vector2(scale_tile, scale_tile)
+			
+			#Ignora o ultima peça na hora de colocar cor
+			if (i * grid_size + j) != tile_count - 1:
+				background_instance.modulate = TILES_COLORS[i] 
+				
+			#Muda a cor do fundo de acordo com  a linha atual
+			background_instance.position = Vector2((tile_size * j + tile_offset), tile_size * i + tile_offset)
+			backgrounds_parent.add_child(background_instance)
+			
 		
 	var scale_fruit:float = 2.0 / grid_size 
 	for i in range(grid_size):
@@ -115,6 +119,7 @@ func adjust_background() -> void:
 	var offset_y: float = (screen_size.y - texture_size.y * scale_factor) / 2
 	background.position = Vector2(offset_x + 40, offset_y + 28)
 	#background.position = Vector2(offset_x + 42, offset_y + 58)
+	
 func instantiate_fences(restrictions: Array) -> void:
 	#Dependendo do tipo de restrição instancia a cena da cerca
 	var scene: PackedScene
