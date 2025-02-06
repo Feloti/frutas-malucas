@@ -1,6 +1,8 @@
+
 [gd_scene load_steps=16 format=3 uid="uid://c0lioeafqocdo"]
 
 [gd_scene load_steps=33 format=3 uid="uid://c0lioeafqocdo"]
+
 
 [ext_resource type="Script" path="res://scripts/scrollContainer.gd" id="1_2qmvg"]
 [ext_resource type="Script" path="res://scripts/SelectLevelCollision.gd" id="1_gfs2k"]
@@ -8,11 +10,13 @@
 [ext_resource type="Texture2D" uid="uid://iyfhf61ospoa" path="res://sprites/PathLevel/path03.png" id="2_va3ye"]
 [ext_resource type="Texture2D" uid="uid://borb4fo03xbct" path="res://sprites/PathLevel/path02.png" id="3_wsisv"]
 [ext_resource type="Texture2D" uid="uid://oooil3wqsujd" path="res://sprites/PathLevel/path01.png" id="4_vdgqw"]
+
 [ext_resource type="Texture2D" uid="uid://36ktqh8o6dl5" path="res://sprites/UI/arrow.png" id="7_5574j"]
 [ext_resource type="Texture2D" uid="uid://bw0pcj051th17" path="res://sprites/UI/options-button_active.png" id="8_2yejq"]
 
 [ext_resource type="Texture2D" uid="uid://dg2fxq1v4w0iv" path="res://sprites/UI/coin1_16x16.png" id="7_fp0o3"]
 [ext_resource type="FontFile" uid="uid://dfq04ir5jmgnm" path="res://fonts/PixelOperator8-Bold.ttf" id="8_knpay"]
+
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gxon2"]
 radius = 6.79569
