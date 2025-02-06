@@ -4,7 +4,7 @@
 		"Apple1", "Apple2", "Pear1",  "Apple3", 
 		"Banana1", "Pear2", "Empty", "Banana2",
 		"Banana3", "Grape1", "Grape2", "Grape3", 
-		"Banana4", "Pearl3", "Apple4", "Grape4"
+		"Banana4", "Pear3", "Apple4", "Grape4"
 	],
 	"solved": [
 		["Apple1", "Apple2", "Apple3", "Apple4"],
