@@ -2,7 +2,7 @@ extends Node
 
 var selected_character = 1
 var username = ""
-var current_level = 5
+var current_level = 3
 var higher_level_completed = 0
 var Coins = 0
 

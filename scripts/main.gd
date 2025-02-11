@@ -24,8 +24,9 @@ func _ready() -> void:
 	var character_scene: PackedScene = load(Global.characters[Global.selected_character])
 	var character_instance:CharacterBody2D = character_scene.instantiate()
 	spawn_point.add_child(character_instance)
-
+	
 	#Todo: Estilizar e mudar label para cena própria
+	"""
 	var label_username = Label.new()
 	label_username.text = Global.username
 	label_username.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -33,7 +34,7 @@ func _ready() -> void:
 	label_username.scale = Vector2(0.3, 0.3)
 	label_username.name = "Username"
 	
-	username_space.add_child(label_username)
+	username_space.add_child(label_username)"""
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

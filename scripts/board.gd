@@ -20,11 +20,25 @@ var tiles: Array = []
 var solved_rows: Array = []
 var restrictions: Array = [] 
 var fences: Array = []
+var player: CharacterBody2D
+var is_power_used: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	adjust_background()
 	start_game()
+	call_deferred("initialize_player")
+
+func initialize_player():
+	player = get_node_or_null("../Character/Player")
+	player.board = self #Passa o objeto para o acesso das variaveis internas
+	player.power_used.connect(_on_power_used)
+	player.get_child(0).visible = true
+
+func _on_power_used(wrong: int, candidate: int):
+	if !is_power_used:
+		swap_tiles(wrong, candidate)
+		is_power_used = true #Bloquea o poder para apenas um uso
 
 func start_game() -> void:
 	#Le informações do nivel do level{i}.json
@@ -241,6 +255,16 @@ func swap_tiles(tile_src: int, tile_dst: int) -> void:
 	if fences[tile_dst] != null and fences[tile_dst].name != "free":
 		fences[tile_dst].position.x = (tile_dst % grid_size) * tile_size
 		fences[tile_dst].position.y = (tile_dst / grid_size) * tile_size
+		
+	if is_solved():
+		print("Resolvido")
+		Global.Coins +=10
+		#gera 10 moedas assim que o player acabar a fase
+		#Evita que ao completar novamente niveis mais baixo libere os mais acima
+		if Global.current_level - 1 == Global.higher_level_completed:
+			Global.higher_level_completed += 1
+		get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
+		#shuffle_tiles()
 
 func handle_mouse_click(mouse_position: Vector2) -> void:
 	if !is_valid_position(mouse_position):
@@ -260,15 +284,17 @@ func handle_mouse_click(mouse_position: Vector2) -> void:
 	#Verifica se a peça que o jogador clicou é vizinha ao espaço vazio
 	if pos in neighbours:
 		swap_tiles(empty, pos)
+		player.use_power(tiles, solved_rows)
 
-	if is_solved():
-		print("Resolvido")
-		Global.Coins +=10
+	#MOVIDO PARA swap_tiles()
+	#if is_solved():
+	#	print("Resolvido")
+	#	Global.Coins +=10
 		#gera 10 moedas assim que o player acabar a fase
 		#Evita que ao completar novamente niveis mais baixo libere os mais acima
-		if Global.current_level - 1 == Global.higher_level_completed:
-			Global.higher_level_completed += 1
-		get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
+	#	if Global.current_level - 1 == Global.higher_level_completed:
+	#		Global.higher_level_completed += 1
+	#	get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
 		#shuffle_tiles()
 
 func is_solved() -> bool:

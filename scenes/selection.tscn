@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://0mlmgp1fuime"]
+[gd_scene load_steps=11 format=3 uid="uid://0mlmgp1fuime"]
 
 [ext_resource type="Script" path="res://sprites/Tiles/select.gd" id="1_61ffd"]
 [ext_resource type="PackedScene" uid="uid://cqmd1qmmodljl" path="res://actors/capuz.tscn" id="1_fiabd"]
 [ext_resource type="PackedScene" uid="uid://bh6p3mk2qusbn" path="res://actors/owlet.tscn" id="2_awmdx"]
 [ext_resource type="Texture2D" uid="uid://jhwnv2cm0kis" path="res://sprites/BG/SelectionBG.jpeg" id="2_l2s32"]
 [ext_resource type="Texture2D" uid="uid://chjospyhrxfhj" path="res://sprites/Bordas.png" id="2_x25if"]
-[ext_resource type="Script" path="res://scripts/owlet.gd" id="5_m2iue"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iyi4a"]
 atlas = ExtResource("2_x25if")
@@ -70,7 +69,6 @@ sprite_frames = SubResource("SpriteFrames_d5eaf")
 
 [node name="Character" parent="2" instance=ExtResource("2_awmdx")]
 position = Vector2(67, 77)
-script = ExtResource("5_m2iue")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="2"]
 position = Vector2(65.5, 80)
