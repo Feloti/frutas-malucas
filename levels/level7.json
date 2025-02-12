@@ -13,9 +13,9 @@
 		["Pear1", "Pear2", "Pear3", "Empty"]
 	],
 	"restrictions": [
-		"free", "vertical_locked", "free", "locked",
+		"free", "vertical_locked", "free", "free",
 		"free", "free", "free", "free",
-		"free", "free", "free", "free",
-		"horizontal_locked", "locked", "free", "free"
+		"vertical_locked", "free", "free", "free",
+		"free", "free", "free", "free"
 	],
 }

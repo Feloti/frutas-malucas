@@ -22,6 +22,7 @@ var restrictions: Array = []
 var fences: Array = []
 var player: CharacterBody2D
 var is_power_used: bool = false
+var map: Array
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,20 +36,19 @@ func initialize_player():
 	player.power_used.connect(_on_power_used)
 	player.get_child(0).visible = true
 
-func _on_power_used(wrong: int, candidate: int):
+func _on_power_used():
 	if !is_power_used:
-		swap_tiles(wrong, candidate)
 		is_power_used = true #Bloquea o poder para apenas um uso
 
 func start_game() -> void:
-	#Le informações do nivel do level{i}.json
 	var level = "res://levels/level%s.json" % Global.current_level
 	var file:FileAccess = FileAccess.open(level, FileAccess.READ)
 	var text:String = file.get_as_text()
 	var data:Dictionary = JSON.parse_string(text)
 
 	#Define valores para a construção do tabuleiro
-	var map:Array = data["map"] #O mapa com a ordem que as peças estarão
+	#var map:Array = data["map"] #O mapa com a ordem que as peças estarão
+	map = data["map"] #O mapa com a ordem que as peças estarão
 	grid_size = (data["size"]) #Tamanho do map
 	tile_count  = grid_size * grid_size #Quantidade de peças
 	restrictions = data["restrictions"] #Lugares onde há restrições(cercas)
@@ -111,6 +111,9 @@ func start_game() -> void:
 	
 	solved_rows = data["solved"]
 	instantiate_fences(restrictions)
+	if Global.current_level <= Global.higher_level_completed: 
+			shuffle_tiles()
+			print("Aleatorizou")
 
 func adjust_background() -> void:
 	#Pega o tamanho da tela do dispositivo
@@ -157,6 +160,8 @@ func instantiate_fences(restrictions: Array) -> void:
 		
 		add_child(instance)
 		fences.append(instance)
+		
+		#Caso o nível esteja sendo jogado denovo, aleatoriza os locais das peças
 
 #Procura pelo espaço vazio
 func find_empty() -> int:
@@ -215,7 +220,7 @@ func shuffle_tiles() -> void:
 		var neighbours: Array = empty_neighbours(empty, restrictions)
 		var moved_tile: int = choose_neighbour(neighbours)
 
-		swap_tiles(empty, moved_tile)
+		swap_tiles(empty, moved_tile, "random")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -224,10 +229,12 @@ func _process(delta: float) -> void:
 func is_valid_position(position: Vector2) -> bool:
 	#Restringe o clique apenas a região do tabuleiro
 	#84x84 é o tamanho do tabuleiro
-	return position.x >= BOARD_OFFSET_X and position.x < BOARD_OFFSET_X + 84  \
-	and position.y >= BOARD_OFFSET_Y and position.y < BOARD_OFFSET_Y + 84
+	return position.x >= BOARD_OFFSET_X and position.x < BOARD_OFFSET_X + BOARD_SIZE  \
+	and position.y >= BOARD_OFFSET_Y and position.y < BOARD_OFFSET_Y + BOARD_SIZE
 
-func swap_tiles(tile_src: int, tile_dst: int) -> void:
+func swap_tiles(tile_src: int, tile_dst: int, type_caller: String) -> void:
+	if restrictions[tile_dst] == "locked":
+		return
 	#Troca a posição da peça pelo espaço vazio no sprite
 	var temp_pos: Vector2 = tiles[tile_src].position
 	tiles[tile_src].position = tiles[tile_dst].position
@@ -255,16 +262,16 @@ func swap_tiles(tile_src: int, tile_dst: int) -> void:
 	if fences[tile_dst] != null and fences[tile_dst].name != "free":
 		fences[tile_dst].position.x = (tile_dst % grid_size) * tile_size
 		fences[tile_dst].position.y = (tile_dst / grid_size) * tile_size
-		
-	if is_solved():
-		print("Resolvido")
-		Global.Coins +=10
-		#gera 10 moedas assim que o player acabar a fase
-		#Evita que ao completar novamente niveis mais baixo libere os mais acima
-		if Global.current_level - 1 == Global.higher_level_completed:
-			Global.higher_level_completed += 1
-		get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
-		#shuffle_tiles()
+	
+	if type_caller == "Player":
+		if is_solved():
+			print("Resolvido")
+			Global.Coins +=10
+			#gera 10 moedas assim que o player acabar a fase
+			#Evita que ao completar novamente niveis mais baixo libere os mais acima
+			if Global.current_level - 1 == Global.higher_level_completed:
+				Global.higher_level_completed += 1
+			get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
 
 func handle_mouse_click(mouse_position: Vector2) -> void:
 	if !is_valid_position(mouse_position):
@@ -283,19 +290,7 @@ func handle_mouse_click(mouse_position: Vector2) -> void:
 
 	#Verifica se a peça que o jogador clicou é vizinha ao espaço vazio
 	if pos in neighbours:
-		swap_tiles(empty, pos)
-		player.use_power(tiles, solved_rows)
-
-	#MOVIDO PARA swap_tiles()
-	#if is_solved():
-	#	print("Resolvido")
-	#	Global.Coins +=10
-		#gera 10 moedas assim que o player acabar a fase
-		#Evita que ao completar novamente niveis mais baixo libere os mais acima
-	#	if Global.current_level - 1 == Global.higher_level_completed:
-	#		Global.higher_level_completed += 1
-	#	get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
-		#shuffle_tiles()
+		swap_tiles(empty, pos, "Player")
 
 func is_solved() -> bool:
 	var aux: Array = []

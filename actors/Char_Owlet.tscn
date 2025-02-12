@@ -3,8 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://c04v4741hool6" path="res://sprites/Characters/Owlet_Monster/Owlet_Monster_Idle_4.png" id="1_32t2c"]
 [ext_resource type="Script" path="res://scripts/owlet.gd" id="1_dlj46"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_p2o1r"]
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_uuoji"]
 atlas = ExtResource("1_32t2c")
 region = Rect2(0, 0, 32, 32)
@@ -41,14 +39,19 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Owlet" type="CharacterBody2D"]
-script = ExtResource("1_dlj46")
+[sub_resource type="CircleShape2D" id="CircleShape2D_p2o1r"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_p2o1r")
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(0, -3)
+script = ExtResource("1_dlj46")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_dekrl")
 autoplay = "default"
 frame_progress = 0.676186
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 4)
+scale = Vector2(1, 1.6)
+shape = SubResource("CircleShape2D_p2o1r")

@@ -25,9 +25,10 @@ func _ready() -> void:
 	# Conecta o sinal de scroll
 	var v_scroll:VScrollBar = scroll_container.get_v_scroll_bar()
 	v_scroll.value_changed.connect(_update_collisions_positions)
-	
-	CoinsCounter.text = str(Global.Coins)
+
 	#faz o label receber o valor das moedas
+	CoinsCounter.text = str(Global.Coins)
+	
 func _update_collisions_positions(scroll_value: float) -> void:
 	for i in range(collision_shapes.size()):
 		collision_shapes[i].node.position.y = collision_shapes[i]["original_y"] + scroll_till_bottom - scroll_value
@@ -67,7 +68,6 @@ func _on_return_button_pressed() -> void:
 
 func _on_config_button_pressed() -> void:
 	pass
-
 
 func _on_texture_button_pressed() -> void:
 	pass # Replace with function body.
