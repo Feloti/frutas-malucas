@@ -15,6 +15,3 @@ func _play_music(music: AudioStream, volume = -20.0):
 
 func play_music_level():
 	_play_music(level_music)
-
-
-

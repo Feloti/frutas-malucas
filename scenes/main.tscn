@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://o3ngn8x5fefs"]
+[gd_scene load_steps=11 format=3 uid="uid://o3ngn8x5fefs"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_akkna"]
 [ext_resource type="Script" path="res://scripts/board.gd" id="2_3yvai"]
 [ext_resource type="Texture2D" uid="uid://c0mr8na1f4rde" path="res://sprites/UI/background_level.jpg" id="4_cdo0p"]
 [ext_resource type="Texture2D" uid="uid://36ktqh8o6dl5" path="res://sprites/UI/arrow.png" id="4_mlfks"]
 [ext_resource type="Texture2D" uid="uid://bw0pcj051th17" path="res://sprites/UI/options-button_active.png" id="5_0474p"]
+[ext_resource type="FontFile" uid="uid://dfq04ir5jmgnm" path="res://fonts/PixelOperator8-Bold.ttf" id="5_cflb6"]
 [ext_resource type="Texture2D" uid="uid://b0rcetexgbwam" path="res://sprites/BordasMarrom.png" id="7_w6lha"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ctaqn"]
@@ -52,6 +53,20 @@ shape = SubResource("RectangleShape2D_nq1ux")
 
 [node name="Frutas" type="Node2D" parent="Board"]
 
+[node name="Timer" type="Timer" parent="Board"]
+wait_time = 60.0
+one_shot = true
+
+[node name="Timer Game" type="Label" parent="Board"]
+texture_filter = 1
+offset_left = 1.0
+offset_top = 91.0
+offset_right = 77.0
+offset_bottom = 107.0
+theme_override_fonts/font = ExtResource("5_cflb6")
+theme_override_font_sizes/font_size = 16
+text = "00:00"
+
 [node name="Character" type="Node2D" parent="."]
 position = Vector2(45, 30)
 
@@ -92,4 +107,5 @@ offset_bottom = 514.0
 scale = Vector2(0.02, 0.02)
 texture_normal = ExtResource("5_0474p")
 
+[connection signal="timeout" from="Board/Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="Buttons/ReturnButton" to="." method="_on_return_button_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://qerps3ikqe5v"]
+[gd_scene load_steps=27 format=3 uid="uid://qerps3ikqe5v"]
 
 [ext_resource type="Script" path="res://scripts/chest_scene.gd" id="1_htpic"]
 [ext_resource type="Texture2D" uid="uid://b3vkj0hgkr8w7" path="res://sprites/Chests/CLOSED/BACKLIGHT/chests-01.png" id="1_ur1jo"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://36ktqh8o6dl5" path="res://sprites/UI/arrow.png" id="5_1y5ds"]
 [ext_resource type="Texture2D" uid="uid://dg2fxq1v4w0iv" path="res://sprites/UI/coin1_16x16.png" id="7_jsmbb"]
 [ext_resource type="FontFile" uid="uid://dfq04ir5jmgnm" path="res://fonts/PixelOperator8-Bold.ttf" id="8_sdrmt"]
+[ext_resource type="Script" path="res://scripts/label_coin.gd" id="9_dt6uh"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sy0sw"]
 animations = [{
@@ -190,7 +191,7 @@ offset_bottom = 16.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("8_sdrmt")
 theme_override_font_sizes/font_size = 16
-text = "+10"
+script = ExtResource("9_dt6uh")
 
 [node name="Title" type="Label" parent="."]
 texture_filter = 1

@@ -23,13 +23,17 @@ var fences: Array = []
 var player: CharacterBody2D
 var is_power_used: bool = false
 var map: Array
+@onready var timer = $Timer
+@onready var label = $"Timer Game"
 
 # Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	adjust_background()
 	start_game()
 	call_deferred("initialize_player")
-
+	timer.start()
+	
 func initialize_player():
 	player = get_node_or_null("../Character/Player")
 	player.board = self #Passa o objeto para o acesso das variaveis internas
@@ -224,7 +228,7 @@ func shuffle_tiles() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	label.text = "%02d: %02d" % time_left()
 
 func is_valid_position(position: Vector2) -> bool:
 	#Restringe o clique apenas a região do tabuleiro
@@ -266,13 +270,14 @@ func swap_tiles(tile_src: int, tile_dst: int, type_caller: String) -> void:
 	if type_caller == "Player":
 		if is_solved():
 			print("Resolvido")
-			Global.Coins +=10
+			Global.CoinsEd =(100-(60 - time_left()[1]))
+			Global.Coins +=(Global.CoinsEd)
+			#60 segundos, realiza a soma das moedas em questao ao tempo gasto quanto mais tempo gasto menos moedas
 			#gera 10 moedas assim que o player acabar a fase
 			#Evita que ao completar novamente niveis mais baixo libere os mais acima
 			if Global.current_level - 1 == Global.higher_level_completed:
 				Global.higher_level_completed += 1
 			get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
-
 func handle_mouse_click(mouse_position: Vector2) -> void:
 	if !is_valid_position(mouse_position):
 		return
@@ -319,6 +324,13 @@ func is_solved() -> bool:
 
 	return true
 
+func time_left():
+	var time_left = timer.time_left
+	var minute = floor(time_left /60)
+	var second = int(time_left) %60
+	#var second2 = int(time_left) %60
+	return [minute,second]
+	#realiza o contador dentro do jogo
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		handle_mouse_click(event.position)
