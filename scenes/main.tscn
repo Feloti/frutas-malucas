@@ -54,7 +54,6 @@ shape = SubResource("RectangleShape2D_nq1ux")
 [node name="Frutas" type="Node2D" parent="Board"]
 
 [node name="Timer" type="Timer" parent="Board"]
-wait_time = 60.0
 one_shot = true
 
 [node name="Timer Game" type="Label" parent="Board"]

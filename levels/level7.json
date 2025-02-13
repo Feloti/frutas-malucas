@@ -1,5 +1,6 @@
 {
 	"size": 4,
+	"time": 60,
 	"map": [
 		"Apple1", "Apple2", "Pear1",  "Apple3", 
 		"Banana1", "Pear2", "Empty", "Banana2",

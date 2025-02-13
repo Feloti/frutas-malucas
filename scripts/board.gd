@@ -14,15 +14,17 @@ const BACKGROUND_SCENE:PackedScene = preload("res://actors/tile_background.tscn"
 
 var grid_size: int
 var tile_count: int
+var time_to_finish: int
 var scale_tile: float
 var tile_size: float
+var is_power_used: bool = false
+var boss_power_used:bool = false 
 var tiles: Array = []
 var solved_rows: Array = []
 var restrictions: Array = [] 
 var fences: Array = []
 var player: CharacterBody2D
-var is_power_used: bool = false
-var map: Array
+
 @onready var timer = $Timer
 @onready var label = $"Timer Game"
 
@@ -32,13 +34,26 @@ func _ready() -> void:
 	adjust_background()
 	start_game()
 	call_deferred("initialize_player")
+	
+	timer.wait_time = time_to_finish
 	timer.start()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	label.text = "%02d: %02d" % time_left()
+	
+	if Global.current_level % 10 == 0: #Nivel de boss a cada 10 niveis?
+		if time_left()[1] % 20 == 0 and !boss_power_used: #A cada 10 segundos move a peça
+			boss_power()
+			boss_power_used = true
+		elif time_left()[1] % 20 != 0:
+			boss_power_used = false
 	
 func initialize_player():
 	player = get_node_or_null("../Character/Player")
 	player.board = self #Passa o objeto para o acesso das variaveis internas
 	player.power_used.connect(_on_power_used)
-	player.get_child(0).visible = true
+	player.get_child(0).visible = true #Torna vísivel o efeito atrás do personagem
 
 func _on_power_used():
 	if !is_power_used:
@@ -52,10 +67,11 @@ func start_game() -> void:
 
 	#Define valores para a construção do tabuleiro
 	#var map:Array = data["map"] #O mapa com a ordem que as peças estarão
-	map = data["map"] #O mapa com a ordem que as peças estarão
+	var map:Array = data["map"] #O mapa com a ordem que as peças estarão
 	grid_size = (data["size"]) #Tamanho do map
+	restrictions = data["restrictions"] #Lugares onde há restrições(cercas)]
+	time_to_finish = data["time"]
 	tile_count  = grid_size * grid_size #Quantidade de peças
-	restrictions = data["restrictions"] #Lugares onde há restrições(cercas)
 	tile_size = BOARD_SIZE / grid_size #Define o tamanho da peça em pixels
 	scale_tile = 0.14 / grid_size #Escala para transformar o sprite original no tamanho do tile_size
 	
@@ -226,9 +242,55 @@ func shuffle_tiles() -> void:
 
 		swap_tiles(empty, moved_tile, "random")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	label.text = "%02d: %02d" % time_left()
+func extract_fruit_name(fruit_name) -> String:
+	"""Remove os valores numéricos dos nomes dos nós das frutas"""
+	var name:String = ""
+	
+	for character in str(fruit_name):
+		if character.is_valid_int():
+			break
+		name += character
+	
+	return name 
+
+func find_fruit_in_order() -> int:
+	#Encontra a primeira fruta que está na posição correta
+	
+	var fruis_in_the_right_row = []
+	for row in range(grid_size):
+		# Obtém o nome da fruta esperada para esta linha a partir do solved
+		var expected_fruit = extract_fruit_name(solved_rows[row][0])
+		for col in range(grid_size):
+			var index:int = row * grid_size + col
+			#Não permite que a fruta a ser mexida contenha restrições, poderia tornar o tabuleiro não solucionavel
+			if restrictions[index] != "free": 
+				continue
+				
+			var tile:Sprite2D = tiles[index]
+			if extract_fruit_name(tile.name) == expected_fruit: 
+				fruis_in_the_right_row.append(index)
+				#return index #Retorna o indice da fruta correta
+	
+	if len(fruis_in_the_right_row) > 0:
+		var fruit_index = randi() % fruis_in_the_right_row.size()
+		return fruis_in_the_right_row[fruit_index]
+		
+	return -1 # Não há fruta na linha correta
+
+func boss_power() -> void:
+	var tile_src:int = find_fruit_in_order()
+	var random_tile_dst: int
+	
+	#Escolhe aleatoriamente, onde a troca ocorrera. 
+	while true:
+		random_tile_dst = randi() % tile_count
+		if restrictions[random_tile_dst] == "free": #Evita peça com restrição
+			break
+	
+	if tile_src != -1:
+		swap_tiles(tile_src, random_tile_dst, "random")
+	
+#Var para evitar multiplos moviemntos, já que o _process é chamado mais que uma vez por segundo
 
 func is_valid_position(position: Vector2) -> bool:
 	#Restringe o clique apenas a região do tabuleiro
@@ -278,6 +340,7 @@ func swap_tiles(tile_src: int, tile_dst: int, type_caller: String) -> void:
 			if Global.current_level - 1 == Global.higher_level_completed:
 				Global.higher_level_completed += 1
 			get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
+			
 func handle_mouse_click(mouse_position: Vector2) -> void:
 	if !is_valid_position(mouse_position):
 		return
@@ -331,6 +394,7 @@ func time_left():
 	#var second2 = int(time_left) %60
 	return [minute,second]
 	#realiza o contador dentro do jogo
+	
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		handle_mouse_click(event.position)

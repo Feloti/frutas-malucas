@@ -12,5 +12,4 @@ var TimeL = 0
 var characters = {
 	1: "res://actors/Char_Hood.tscn",
 	2: "res://actors/Char_Florest.tscn"
-	
 }

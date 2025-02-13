@@ -17,25 +17,14 @@ func _ready() -> void:
 	$AnimatedSprite2D.play(\"idle\")
 	$EffectChargedPower/CharacterShade.play(\"idle\")
 	
-func extract_fruit_name(fruit_name):
-	\"\"\"Remove os valores numéricos dos nomes dos nós das frutas\"\"\"
-	var name = \"\"
-	
-	for character in str(fruit_name):
-		if character.is_valid_int():
-			break
-		name += character
-	
-	return name 
-	
 func use_power(tiles, solved) -> Array:
 	for row in range(board.grid_size):
 		# Obtém o nome da fruta esperada para esta linha a partir do solved
-		var expected_fruit = extract_fruit_name(solved[row][0])
+		var expected_fruit = board.extract_fruit_name(solved[row][0])
 		for col in range(board.grid_size):
 			var index = row * board.grid_size + col
 			var tile = tiles[index]
-			var actual_fruit = extract_fruit_name(tile.name)
+			var actual_fruit = board.extract_fruit_name(tile.name)
 		
 			# Caso especial para \"Empty\" na última posição da quarta linha
 			if row == board.grid_size - 1 and col == board.grid_size - 1 and actual_fruit == \"Empty\":
@@ -47,7 +36,7 @@ func use_power(tiles, solved) -> Array:
 				#Começa de traz para frente, para buscar a fruta mais distante
 				for i in range(len(tiles) - 1, -1, -1): 
 					var candidate_row = i / board.grid_size
-					var candidate_fruit = extract_fruit_name(tiles[i].name)
+					var candidate_fruit = board.extract_fruit_name(tiles[i].name)
 					# 'candidate_row' ignora caso a fruta já esteja na linha correta
 					if candidate_fruit == expected_fruit and candidate_row != row:
 						candidate_index = i
