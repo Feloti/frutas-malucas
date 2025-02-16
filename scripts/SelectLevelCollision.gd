@@ -2,7 +2,7 @@ extends Node2D
 
 func _ready():
 	#Conecta cada nivel a função que verifica se o click ocorre
-	for level in range(1, 11):
+	for level in range(1, 12):
 		var node_name = "Level%02d" % level
 		get_node(node_name).input_event.connect(_on_level_clicked.bind(level))
 

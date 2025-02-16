@@ -3,7 +3,7 @@ extends Area2D
 @onready var scroll_container: ScrollContainer = $ScrollContainer
 @onready var CoinsCounter = $CoinsCounter
 
-var total_levels = 10
+var total_levels = 11
 var scroll_till_bottom = 160 * 2 #Tamanho da tela vertical * numero de telas extras
 var sprite_leaf = load("res://sprites/Others/fallen_leaves.png")
 var collision_shapes = []

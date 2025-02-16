@@ -4,6 +4,7 @@ var selected_character = "Crimson"
 #var username = ""
 var current_level = 1
 var higher_level_completed = 0
+var infinite_level = 1
 var Coins = 0
 var CoinsEd = 0
 #CoinsEd significa o valor de moedas ganhadas no final da fase

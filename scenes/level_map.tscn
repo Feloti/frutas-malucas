@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://scripts/scrollContainer.gd" id="1_2qmvg"]
 [ext_resource type="Script" path="res://scripts/SelectLevelCollision.gd" id="1_gfs2k"]
 [ext_resource type="Script" path="res://scripts/SelectLevel.gd" id="1_kqe0w"]
-[ext_resource type="Texture2D" uid="uid://iyfhf61ospoa" path="res://sprites/PathLevel/path03.png" id="2_va3ye"]
 [ext_resource type="Texture2D" uid="uid://borb4fo03xbct" path="res://sprites/PathLevel/path02.png" id="3_wsisv"]
 [ext_resource type="Texture2D" uid="uid://oooil3wqsujd" path="res://sprites/PathLevel/path01.png" id="4_vdgqw"]
+[ext_resource type="Texture2D" uid="uid://cnthb8ija6354" path="res://sprites/PathLevel/path03n.png" id="4_x7u8j"]
 [ext_resource type="Texture2D" uid="uid://36ktqh8o6dl5" path="res://sprites/UI/arrow.png" id="7_5574j"]
 [ext_resource type="Texture2D" uid="uid://bw0pcj051th17" path="res://sprites/UI/options-button_active.png" id="8_2yejq"]
 [ext_resource type="FontFile" uid="uid://dfq04ir5jmgnm" path="res://fonts/PixelOperator8-Bold.ttf" id="9_6un7u"]
@@ -239,6 +239,15 @@ rotation = -0.0715104
 scale = Vector2(1.88, 0.642857)
 shape = SubResource("CapsuleShape2D_gxon2")
 
+[node name="Level11" type="Area2D" parent="SelectLevels"]
+rotation = -0.0103048
+
+[node name="Collision" type="CollisionShape2D" parent="SelectLevels/Level11"]
+position = Vector2(44.3817, -300.565)
+rotation = 0.0976628
+scale = Vector2(1.88, 0.642857)
+shape = SubResource("CapsuleShape2D_gxon2")
+
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 offset_right = 90.0
 offset_bottom = 160.0
@@ -257,7 +266,7 @@ alignment = 2
 
 [node name="PathPart3" type="TextureRect" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("2_va3ye")
+texture = ExtResource("4_x7u8j")
 expand_mode = 5
 
 [node name="PathPart2" type="TextureRect" parent="ScrollContainer/VBoxContainer"]

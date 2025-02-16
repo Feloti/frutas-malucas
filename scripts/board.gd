@@ -1,12 +1,11 @@
 extends Area2D
 
 #OBS: Precisa generalizar para funcionar em tabuleiros 3x3, 4x4, 5x5
-
 const BOARD_OFFSET_X: int = 5 #Espaço da borda da tela
 const BOARD_OFFSET_Y: int = 52
 const BOARD_SIZE: int = 80
 const TILES_COLORS = [Color(1.0, 0.0, 0.0), Color(1.0, 0.0, 1.0), Color(1.0, 1.0, 0.0),
- Color(0.0, 1.0, 0.0), Color(1.0, 0.67, 0.11)]
+ Color(0.0, 1.0, 0.0), Color(1.0, 0.67, 0.11), Color(1.0, 0.07, 0.57), Color(0.1, 0.1, 0.9)]
 # Carrega as frutas e os fundos
 const FRUIT_SCENE:PackedScene = preload("res://actors/fruit.tscn") 
 const EMPTY_SCENE:PackedScene = preload("res://actors/empty.tscn")
@@ -31,7 +30,6 @@ var player: CharacterBody2D
 @onready var label = $"Timer Game"
 
 # Called when the node enters the scene tree for the first time.
-
 func _ready() -> void:
 	adjust_background()
 	start_game()
@@ -39,6 +37,7 @@ func _ready() -> void:
 	
 	timer.wait_time = time_to_finish
 	timer.start()
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -61,18 +60,76 @@ func _on_power_used():
 	if power_charges > 0:
 		power_charges -= 1
 
-func start_game() -> void:
-	var level = "res://levels/level%s.json" % Global.current_level
-	var file:FileAccess = FileAccess.open(level, FileAccess.READ)
-	var text:String = file.get_as_text()
-	var data:Dictionary = JSON.parse_string(text)
+var map = []
+func generate_infinite_level() -> void:
+	var base_grid_size = 3
+	 #A cada 5 niveis compretado aumenta o tamanho do grid
+	var size_increase = floor((Global.infinite_level - 1) / 5)
+	grid_size = clamp(base_grid_size + size_increase, 3, 7) #Trava os valores entre 3 e 7
+	tile_count = grid_size * grid_size
+	time_to_finish = 60 + grid_size * (10 + Global.infinite_level) 
+	
+	var fruits = ["Apple", "Grape", "Banana", "Pear", "Orange", "DragonFruit", "BlueBerry"]
+	solved_rows = []
+	
+	#Cria o vetor com as frutas nas posições corretas de acordo com o tamanho do grid
+	for row in range(grid_size):
+		var fruit_type = fruits[row % fruits.size()]
+		for col in range(grid_size):
+			if col == grid_size - 1 and row == col:
+				map.append("Empty")
+				break
+			var tile_name = "%s%d" % [fruit_type, col + 1]
+			map.append(tile_name)
+	
+	#Cria a matriz com as linhas nas posições certas, usada em is_solved
+	var aux = []
+	for i in range(0, tile_count):
+		aux.append(str(map[i]))
+		if (i + 1) % grid_size == 0:
+			solved_rows.append(aux)
+			aux = []
+	
 
-	#Define valores para a construção do tabuleiro
-	#var map:Array = data["map"] #O mapa com a ordem que as peças estarão
-	var map:Array = data["map"] #O mapa com a ordem que as peças estarão
-	grid_size = (data["size"]) #Tamanho do map
-	restrictions = data["restrictions"] #Lugares onde há restrições(cercas)]
-	time_to_finish = data["time"]
+	restrictions = []
+	restrictions.resize(tile_count)
+	restrictions.fill("free")
+	
+	#A cada 3 niveis completado aumenta o numeros de restrições, trava o valor entre 0 e 
+	#-3 da quantidade de peças (tem que ser testado para, com a adição de muitas restições 
+	#provalvemente deve gerar um tambuleiro mais facil de resolver
+	var num_fences = clamp(floor(Global.infinite_level / 3) + 1, 0, tile_count - 3)
+	
+	#Aleatoariza as posições das cercas
+	for i in range(num_fences):
+		var pos = randi() % (tile_count - 1)
+		
+		#Ignora configuração problematica com o poder de trocar peça (3x3, com restrição total no meio)
+		if grid_size == 3 and pos == 4: 
+			pos += 1
+			
+		if restrictions[pos] == "free":
+			var fence_types = ["locked", "horizontal_locked", "vertical_locked"]
+			restrictions[pos] = fence_types[randi() % fence_types.size()]
+	
+
+func start_game() -> void:
+	if Global.current_level == 11: #Nivel infinito
+		generate_infinite_level()
+	else:
+		var level = "res://levels/level%s.json" % Global.current_level
+		var file:FileAccess = FileAccess.open(level, FileAccess.READ)
+		var text:String = file.get_as_text()
+		var data:Dictionary = JSON.parse_string(text)
+
+		#Define valores para a construção do tabuleiro
+		#var map:Array = data["map"] #O mapa com a ordem que as peças estarão
+		map = data["map"] #O mapa com a ordem que as peças estarão
+		grid_size = (data["size"]) #Tamanho do map
+		restrictions = data["restrictions"] #Lugares onde há restrições(cercas)]
+		time_to_finish = data["time"]
+		solved_rows = data["solved"]
+	
 	tile_count  = grid_size * grid_size #Quantidade de peças
 	tile_size = BOARD_SIZE / grid_size #Define o tamanho da peça em pixels
 	scale_tile = 0.14 / grid_size #Escala para transformar o sprite original no tamanho do tile_size
@@ -99,6 +156,10 @@ func start_game() -> void:
 			fruit_texture = load("res://sprites/Fruits/PearNL_HL.png")
 		elif map[i].contains("Orange"):
 			fruit_texture = load("res://sprites/Fruits/OrangeNL_HL.png")
+		elif map[i].contains("DragonFruit"):
+			fruit_texture = load("res://sprites/Fruits/DragonFruitNL_HL.png")
+		elif map[i].contains("BlueBerry"):
+			fruit_texture = load("res://sprites/Fruits/BlueberryNL_HL.png")
 		elif map[i].contains("Empty"):
 			fruit_instance = EMPTY_SCENE.instantiate()
 			
@@ -117,13 +178,13 @@ func start_game() -> void:
 			
 			#Ignora o ultima peça na hora de colocar cor
 			if (i * grid_size + j) != tile_count - 1:
-				background_instance.modulate = TILES_COLORS[i] 
+				#background_instance.modulate = TILES_COLORS[i] 
+				background_instance.modulate = TILES_COLORS[i % TILES_COLORS.size()] 
 				
 			#Muda a cor do fundo de acordo com  a linha atual
 			background_instance.position = Vector2((tile_size * j + tile_offset), tile_size * i + tile_offset)
 			backgrounds_parent.add_child(background_instance)
 			
-		
 	var scale_fruit:float = 2.0 / grid_size 
 	for i in range(grid_size):
 		for j in range(grid_size):
@@ -131,11 +192,12 @@ func start_game() -> void:
 				+ tile_offset, tile_size * i + tile_offset)
 			tiles[grid_size * i + j].scale = Vector2(scale_fruit, scale_fruit)
 	
-	solved_rows = data["solved"]
 	instantiate_fences(restrictions)
-	if Global.current_level <= Global.higher_level_completed: 
-			shuffle_tiles()
-			print("Aleatorizou")
+	if Global.current_level <= Global.higher_level_completed or Global.current_level == 11: 
+			while true: #Evite que o level aleatório esteja na posição resolvida
+				shuffle_tiles()
+				if !is_solved():
+					break
 
 func adjust_background() -> void:
 	#Pega o tamanho da tela do dispositivo
@@ -237,7 +299,7 @@ func choose_neighbour(neighbours: Array) -> int:
 
 func shuffle_tiles() -> void:
 	#Bem direto, acha o espaço vazio, ve quem são os vizinho e escolhe aleatoriamente um deles
-	for t in range(1000):
+	for t in range(1000 * grid_size):
 		var empty: int = find_empty()
 		var neighbours: Array = empty_neighbours(empty, restrictions)
 		var moved_tile: int = choose_neighbour(neighbours)
@@ -335,13 +397,15 @@ func swap_tiles(tile_src: int, tile_dst: int, type_caller: String) -> void:
 		if is_solved():
 			print("Resolvido")
 			Global.CoinsEd =(100-(60 - time_left()[1]))
-			Global.Coins +=(Global.CoinsEd)
+			Global.Coins += (Global.CoinsEd)
 			#60 segundos, realiza a soma das moedas em questao ao tempo gasto quanto mais tempo gasto menos moedas
 			#gera 10 moedas assim que o player acabar a fase
 			#Evita que ao completar novamente niveis mais baixo libere os mais acima
 			if Global.current_level - 1 == Global.higher_level_completed:
 				Global.higher_level_completed += 1
-					
+				print(Global.higher_level_completed)
+			elif Global.current_level == 11:
+				Global.infinite_level += 1
 			#Carregar a cena no inicio do nivel evita queda de FPS, quando ela é mudada
 			get_tree().change_scene_to_packed(CHEST_SCENE)
 			#get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
