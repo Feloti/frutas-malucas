@@ -11,13 +11,15 @@ const TILES_COLORS = [Color(1.0, 0.0, 0.0), Color(1.0, 0.0, 1.0), Color(1.0, 1.0
 const FRUIT_SCENE:PackedScene = preload("res://actors/fruit.tscn") 
 const EMPTY_SCENE:PackedScene = preload("res://actors/empty.tscn")
 const BACKGROUND_SCENE:PackedScene = preload("res://actors/tile_background.tscn")
+const CHEST_SCENE:PackedScene = preload("res://scenes/chest_scene.tscn")
 
 var grid_size: int
 var tile_count: int
 var time_to_finish: int
+var power_charges: int = Global.character_levels[Global.selected_character]
+var is_power_used: bool = false
 var scale_tile: float
 var tile_size: float
-var is_power_used: bool = false
 var boss_power_used:bool = false 
 var tiles: Array = []
 var solved_rows: Array = []
@@ -56,8 +58,8 @@ func initialize_player():
 	player.get_child(0).visible = true #Torna vísivel o efeito atrás do personagem
 
 func _on_power_used():
-	if !is_power_used:
-		is_power_used = true #Bloquea o poder para apenas um uso
+	if power_charges > 0:
+		power_charges -= 1
 
 func start_game() -> void:
 	var level = "res://levels/level%s.json" % Global.current_level
@@ -339,7 +341,10 @@ func swap_tiles(tile_src: int, tile_dst: int, type_caller: String) -> void:
 			#Evita que ao completar novamente niveis mais baixo libere os mais acima
 			if Global.current_level - 1 == Global.higher_level_completed:
 				Global.higher_level_completed += 1
-			get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
+					
+			#Carregar a cena no inicio do nivel evita queda de FPS, quando ela é mudada
+			get_tree().change_scene_to_packed(CHEST_SCENE)
+			#get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")
 			
 func handle_mouse_click(mouse_position: Vector2) -> void:
 	if !is_valid_position(mouse_position):

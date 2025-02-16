@@ -34,7 +34,7 @@ func use_power():
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		if board != null and !board.is_power_used: #Caso o board tenha carregado e o poder ainda não foi usado
+		if board != null and board.power_charges > 0: #Caso o board tenha carregado e o poder ainda não foi usado
 			#Inicia animação de ataque
 			$AnimatedSprite2D.play(\"attack\")
 			$EffectChargedPower/CharacterShade.play(\"attack\")
@@ -47,7 +47,9 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	
 	$AnimatedSprite2D.play(\"idle\")
 	$EffectChargedPower/CharacterShade.play(\"idle\")
-	$EffectChargedPower.visible = false #Desativa aura do personagem
+	
+	if board.power_charges == 0:
+		$EffectChargedPower.visible = false #Desativa aura do personagem
 	
 "
 

@@ -71,6 +71,7 @@ offset_right = 778.0
 offset_bottom = 366.0
 scale = Vector2(0.09, 0.09)
 texture_normal = ExtResource("5_mk44l")
+ignore_texture_size = true
 
 [connection signal="pressed" from="Buttons/ConfigButton" to="." method="_on_config_button_pressed"]
 [connection signal="pressed" from="Buttons/QuitButton" to="." method="_on_quit_button_pressed"]

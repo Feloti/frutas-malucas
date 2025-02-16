@@ -306,14 +306,14 @@ offset_bottom = 515.0
 scale = Vector2(0.04, 0.04)
 texture_normal = ExtResource("8_2yejq")
 
-[node name="ConfigShade2" type="Sprite2D" parent="Buttons"]
+[node name="ShopShade" type="Sprite2D" parent="Buttons"]
 modulate = Color(0, 0, 0, 0.278431)
 texture_filter = 1
 position = Vector2(76, 141.309)
 scale = Vector2(0.039, 0.039)
 texture = ExtResource("9_obsiw")
 
-[node name="TextureButton" type="TextureButton" parent="Buttons"]
+[node name="ShopButton" type="TextureButton" parent="Buttons"]
 texture_filter = 1
 offset_left = 65.2172
 offset_top = 130.0
@@ -345,4 +345,4 @@ frame_progress = 0.932904
 
 [connection signal="pressed" from="Buttons/ReturnButton" to="." method="_on_return_button_pressed"]
 [connection signal="pressed" from="Buttons/ConfigButton" to="." method="_on_config_button_pressed"]
-[connection signal="pressed" from="Buttons/TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="Buttons/ShopButton" to="." method="_on_shop_button_pressed"]

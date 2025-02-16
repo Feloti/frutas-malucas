@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_akkna"]
 [ext_resource type="Script" path="res://scripts/board.gd" id="2_3yvai"]
 [ext_resource type="Texture2D" uid="uid://c0mr8na1f4rde" path="res://sprites/UI/background_level.jpg" id="4_cdo0p"]
-[ext_resource type="Texture2D" uid="uid://36ktqh8o6dl5" path="res://sprites/UI/arrow.png" id="4_mlfks"]
-[ext_resource type="Texture2D" uid="uid://bw0pcj051th17" path="res://sprites/UI/options-button_active.png" id="5_0474p"]
 [ext_resource type="FontFile" uid="uid://dfq04ir5jmgnm" path="res://fonts/PixelOperator8-Bold.ttf" id="5_cflb6"]
 [ext_resource type="Texture2D" uid="uid://b0rcetexgbwam" path="res://sprites/BordasMarrom.png" id="7_w6lha"]
+[ext_resource type="Texture2D" uid="uid://36ktqh8o6dl5" path="res://sprites/UI/arrow.png" id="8_7oyd1"]
+[ext_resource type="Texture2D" uid="uid://bw0pcj051th17" path="res://sprites/UI/options-button_active.png" id="9_hk664"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ctaqn"]
 atlas = ExtResource("7_w6lha")
@@ -77,9 +77,9 @@ position = Vector2(36, 1)
 [node name="ReturnShade" type="Sprite2D" parent="Buttons"]
 modulate = Color(0, 0, 0, 0.278431)
 texture_filter = 1
-position = Vector2(8.25, 8)
-scale = Vector2(0.023, 0.023)
-texture = ExtResource("4_mlfks")
+position = Vector2(10, 10.5)
+scale = Vector2(0.032, 0.032)
+texture = ExtResource("8_7oyd1")
 
 [node name="ReturnButton" type="TextureButton" parent="Buttons"]
 texture_filter = 1
@@ -87,24 +87,25 @@ offset_left = 3.0
 offset_top = 3.0
 offset_right = 515.0
 offset_bottom = 515.0
-scale = Vector2(0.02, 0.02)
-texture_normal = ExtResource("4_mlfks")
+scale = Vector2(0.03, 0.03)
+texture_normal = ExtResource("8_7oyd1")
 
 [node name="ConfigShade" type="Sprite2D" parent="Buttons"]
 modulate = Color(0, 0, 0, 0.278431)
 texture_filter = 1
-position = Vector2(80, 7)
-scale = Vector2(0.023, 0.023)
-texture = ExtResource("5_0474p")
+position = Vector2(75, 10.5)
+scale = Vector2(0.032, 0.032)
+texture = ExtResource("9_hk664")
 
 [node name="ConfigButton" type="TextureButton" parent="Buttons"]
 texture_filter = 1
-offset_left = 75.0
-offset_top = 2.0
-offset_right = 587.0
-offset_bottom = 514.0
-scale = Vector2(0.02, 0.02)
-texture_normal = ExtResource("5_0474p")
+offset_left = 67.0
+offset_top = 3.0
+offset_right = 579.0
+offset_bottom = 515.0
+scale = Vector2(0.03, 0.03)
+texture_normal = ExtResource("9_hk664")
 
 [connection signal="timeout" from="Board/Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="Buttons/ReturnButton" to="." method="_on_return_button_pressed"]
+[connection signal="pressed" from="Buttons/ConfigButton" to="." method="_on_config_button_pressed"]

@@ -32,45 +32,45 @@ size = Vector2(37, 36)
 [node name="Select" type="Area2D"]
 script = ExtResource("1_61ffd")
 
-[node name="1" type="Area2D" parent="."]
+[node name="Crimson" type="Area2D" parent="."]
 position = Vector2(-3, 30)
 
-[node name="Border" type="AnimatedSprite2D" parent="1"]
+[node name="Border" type="AnimatedSprite2D" parent="Crimson"]
 texture_filter = 1
 position = Vector2(26, 80)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_d5eaf")
 
-[node name="Character" parent="1" instance=ExtResource("1_fiabd")]
+[node name="Character" parent="Crimson" instance=ExtResource("1_fiabd")]
 position = Vector2(26, 80)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Crimson"]
 position = Vector2(25.5, 80.5)
 shape = SubResource("RectangleShape2D_r5yo7")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="1"]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Crimson"]
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="1/ParallaxBackground"]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Crimson/ParallaxBackground"]
 
-[node name="SelectionBg" type="Sprite2D" parent="1/ParallaxBackground/ParallaxLayer"]
+[node name="SelectionBg" type="Sprite2D" parent="Crimson/ParallaxBackground/ParallaxLayer"]
 texture_filter = 1
 position = Vector2(45.125, 80.9687)
 scale = Vector2(0.124653, 0.126611)
 texture = ExtResource("4_a0638")
 
-[node name="2" type="Area2D" parent="."]
+[node name="Hickory" type="Area2D" parent="."]
 position = Vector2(-1, 30)
 script = SubResource("GDScript_ryvyu")
 
-[node name="Border" type="AnimatedSprite2D" parent="2"]
+[node name="Border" type="AnimatedSprite2D" parent="Hickory"]
 texture_filter = 1
 position = Vector2(66, 80)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_d5eaf")
 
-[node name="Character" parent="2" instance=ExtResource("5_08yoy")]
+[node name="Character" parent="Hickory" instance=ExtResource("5_08yoy")]
 position = Vector2(65, 77)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="2"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hickory"]
 position = Vector2(65.5, 80)
 shape = SubResource("RectangleShape2D_l0k26")

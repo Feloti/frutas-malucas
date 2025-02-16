@@ -18,15 +18,16 @@ func _ready() -> void:
 	#Remove nós de antigas chamadas
 	if spawn_point.has_node("Player"):
 		spawn_point.get_node("Player").queue_free()
-	if username_space.has_node("Username"):
-		spawn_point.get_node("Username").queue_free()
+	
 	
 	var character_scene: PackedScene = load(Global.characters[Global.selected_character])
 	var character_instance:CharacterBody2D = character_scene.instantiate()
 	spawn_point.add_child(character_instance)
 	
-	#Todo: Estilizar e mudar label para cena própria
 	"""
+	if username_space.has_node("Username"):
+		spawn_point.get_node("Username").queue_free()
+		
 	var label_username = Label.new()
 	label_username.text = Global.username
 	label_username.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -44,5 +45,8 @@ func _on_return_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/level_map.tscn")
 
 
-func _on_timer_timeout() -> void:
+func _on_timer_timeoutr() -> void:
 	get_tree().change_scene_to_file("res://scenes/level_map.tscn")
+
+func _on_config_button_pressed() -> void:
+	pass # Replace with function body.
