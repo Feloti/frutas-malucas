@@ -43,13 +43,13 @@ func update_character_display() -> void:
 	
 	if character_name not in Global.unlocked_characters: 
 		character_instance.modulate = Color(0, 0, 0) #Aplico cor preta ao personagem não desbloqueado
-		$ContentArea/ContentText/ContainerBuy/BuyControl/Price.text = "100" # Preço base para desbloquear
+		$ContentArea/ContentText/ContainerBuy/BuyControl/Price.text = "150" # Preço base para desbloquear
 		#$ContainerBuy/BuyControl/Text.text = "Desbloquear \nPersonagem"
 		$ContentArea/ContentText/ContainerBuy/BuyControl/Text.text = "Desbloquear"
 	else:
 		#$ContainerBuy/BuyControl/Text.text = "Melhorar \nPersonagem"
 		$ContentArea/ContentText/ContainerBuy/BuyControl/Text.text = "Melhorar"
-		$ContentArea/ContentText/ContainerBuy/BuyControl/Price.text = str(Global.character_levels[character_name] * 100)
+		$ContentArea/ContentText/ContainerBuy/BuyControl/Price.text = str(Global.character_levels[character_name] * 150)
 		
 	container.add_child(character_instance) #Adiciona personagem a cena
 	$Coins/CoinAnimation/LabelCoins.text = str(Global.Coins)  #Atualiza quantidaade de moedas no label
