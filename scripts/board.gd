@@ -11,20 +11,27 @@ const FRUIT_SCENE:PackedScene = preload("res://actors/fruit.tscn")
 const EMPTY_SCENE:PackedScene = preload("res://actors/empty.tscn")
 const BACKGROUND_SCENE:PackedScene = preload("res://actors/tile_background.tscn")
 const CHEST_SCENE:PackedScene = preload("res://scenes/chest_scene.tscn")
+const TILE_BRIGHT:PackedScene = preload("res://actors/tile_bright.tscn")
 
 var grid_size: int
 var tile_count: int
 var time_to_finish: int
+var boss_power_time:int = 20
+var current_tile_src: int = -1
+var current_tile_dst: int = -1
 var power_charges: int = Global.character_levels[Global.selected_character]
 var is_power_used: bool = false
 var scale_tile: float
 var tile_size: float
 var boss_power_used:bool = false 
+var enable_boss_infinite_level:bool = false
 var tiles: Array = []
 var solved_rows: Array = []
 var restrictions: Array = [] 
 var fences: Array = []
+var map:Array = []
 var player: CharacterBody2D
+var boss_power_animation_timer:Timer = Timer.new()
 
 @onready var timer = $Timer
 @onready var label = $"Timer Game"
@@ -37,17 +44,20 @@ func _ready() -> void:
 	
 	timer.wait_time = time_to_finish
 	timer.start()
-
+	boss_power_animation_timer.timeout.connect(_on_animation_timer_timeout)
+	add_child(boss_power_animation_timer)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	label.text = "%02d: %02d" % time_left()
 	
-	if Global.current_level % 10 == 0: #Nivel de boss a cada 10 niveis?
-		if time_left()[1] % 20 == 0 and !boss_power_used: #A cada 10 segundos move a peça
-			boss_power()
+	if Global.current_level % 10 == 0 or enable_boss_infinite_level:
+		#Chama a animação 3 segundos antes do swap
+		if time_left()[1] % boss_power_time == 3 and !boss_power_used:
+			boss_power_animation()
 			boss_power_used = true
-		elif time_left()[1] % 20 != 0:
+			boss_power_animation_timer.start(3)
+		elif time_left()[1] % boss_power_time != 5:
 			boss_power_used = false
 	
 func initialize_player():
@@ -60,14 +70,17 @@ func _on_power_used():
 	if power_charges > 0:
 		power_charges -= 1
 
-var map = []
 func generate_infinite_level() -> void:
 	var base_grid_size = 3
 	 #A cada 5 niveis compretado aumenta o tamanho do grid
-	var size_increase = floor((Global.infinite_level - 1) / 5)
+	var size_increase = floor((Global.infinite_level - 1) / 4)
 	grid_size = clamp(base_grid_size + size_increase, 3, 7) #Trava os valores entre 3 e 7
 	tile_count = grid_size * grid_size
-	time_to_finish = 60 + grid_size * (10 + Global.infinite_level) 
+	time_to_finish = 60 + grid_size * (10 + Global.infinite_level)
+	
+	#Causa niveis insoluveis :/ 
+	#enable_boss_infinite_level = Global.infinite_level >= 10 # Ativa a mecaninca do boss fazer 10 niveis
+	#boss_power_time = 40 - Global.infinite_level
 	
 	var fruits = ["Apple", "Grape", "Banana", "Pear", "Orange", "DragonFruit", "BlueBerry"]
 	solved_rows = []
@@ -89,7 +102,6 @@ func generate_infinite_level() -> void:
 		if (i + 1) % grid_size == 0:
 			solved_rows.append(aux)
 			aux = []
-	
 
 	restrictions = []
 	restrictions.resize(tile_count)
@@ -341,20 +353,44 @@ func find_fruit_in_order() -> int:
 		
 	return -1 # Não há fruta na linha correta
 
-func boss_power() -> void:
-	var tile_src:int = find_fruit_in_order()
-	var random_tile_dst: int
-	
+func boss_power_animation() -> void:
+	current_tile_src = find_fruit_in_order()
+	current_tile_dst = -1
+
 	#Escolhe aleatoriamente, onde a troca ocorrera. 
 	while true:
-		random_tile_dst = randi() % tile_count
-		if restrictions[random_tile_dst] == "free": #Evita peça com restrição
+		current_tile_dst = randi() % tile_count
+		if restrictions[current_tile_dst] == "free": #Evita peça com restrição
 			break
-	
-	if tile_src != -1:
-		swap_tiles(tile_src, random_tile_dst, "random")
-	
-#Var para evitar multiplos moviemntos, já que o _process é chamado mais que uma vez por segundo
+
+	if current_tile_src != -1:
+		# Limpa brilhos das peças anteriores
+		for child in $BrightsTiles.get_children():
+			child.queue_free()
+
+		# Cria novos brilhos
+		var bright_instance_src = TILE_BRIGHT.instantiate()
+		bright_instance_src.position = tiles[current_tile_src].position
+		bright_instance_src.scale = Vector2(scale_tile, scale_tile)
+		$BrightsTiles.add_child(bright_instance_src)
+
+		var bright_instance_dst = TILE_BRIGHT.instantiate()
+		bright_instance_dst.position = tiles[current_tile_dst].position
+		bright_instance_dst.scale = Vector2(scale_tile, scale_tile)
+		$BrightsTiles.add_child(bright_instance_dst)
+
+func _on_animation_timer_timeout() -> void:
+	if current_tile_src != -1 && current_tile_dst != -1:
+		#Depois da animação faz a troca
+		swap_tiles(current_tile_src, current_tile_dst, "random")
+
+		# Remove bordas brilhantes
+		for child in $BrightsTiles.get_children():
+			child.queue_free()
+
+		#Reseta os índices
+		current_tile_src = -1
+		current_tile_dst = -1
 
 func is_valid_position(position: Vector2) -> bool:
 	#Restringe o clique apenas a região do tabuleiro

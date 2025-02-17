@@ -3,5 +3,4 @@
 [ext_resource type="Script" path="res://scripts/music_game.gd" id="1_yfxxj"]
 
 [node name="MusicGame" type="AudioStreamPlayer2D"]
-volume_db = -21.745
 script = ExtResource("1_yfxxj")

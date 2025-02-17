@@ -39,15 +39,17 @@ position = Vector2(74, 33)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_cdo0p")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Board"]
+[node name="BoardBorder" type="AnimatedSprite2D" parent="Board"]
 texture_filter = 1
 position = Vector2(40.4, 41.1)
 scale = Vector2(1.58, 1.58)
 sprite_frames = SubResource("SpriteFrames_mvj11")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Board"]
+[node name="BoardCollision" type="CollisionShape2D" parent="Board"]
 position = Vector2(42, 42)
 shape = SubResource("RectangleShape2D_nq1ux")
+
+[node name="BrightsTiles" type="Node2D" parent="Board"]
 
 [node name="FundosPeca" type="Node2D" parent="Board"]
 
