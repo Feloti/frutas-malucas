@@ -6,7 +6,7 @@ var characters:Dictionary = {
 	"Crimson": "res://actors/Char_Hood.tscn",
 	"Hickory": "res://actors/Char_Florest.tscn",
 	"Owlet": "res://actors/Char_Owlet.tscn",
-	"Zinnia": "res://Char_PinkMonster.tscn"
+	"Zinnia": "res://actors/Char_PinkMonster.tscn"
 }
 
 var current_level:int

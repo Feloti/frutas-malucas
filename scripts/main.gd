@@ -7,18 +7,10 @@ extends Area2D
 func _ready() -> void:
 	MusicGame.play_music_level()
 	#inicia a musica que por estar em uma variavel global nao reseta durante leveis e menus
-	#if Global.personagem_selecionado != null:
-	#	var spawn_point = $Character
-	
-	#var c = $Character
-	#print(c)
-	#for child in c.get_children():
-	#	print(child)
-	
+
 	#Remove nós de antigas chamadas
 	if spawn_point.has_node("Player"):
 		spawn_point.get_node("Player").queue_free()
-	
 	
 	var character_scene: PackedScene = load(Global.characters[Global.selected_character])
 	var character_instance:CharacterBody2D = character_scene.instantiate()

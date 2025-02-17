@@ -1,6 +1,6 @@
-[gd_scene load_steps=28 format=3 uid="uid://d100ujb8o8s2o"]
+[gd_scene load_steps=29 format=3 uid="uid://d100ujb8o8s2o"]
 
-[ext_resource type="Texture2D" uid="uid://dv5qojsw8y3vh" path="res://bktemp.jpg" id="1_pqh4j"]
+[ext_resource type="Texture2D" uid="uid://b756dmd6t05m1" path="res://sprites/BG/shopbackground.png" id="1_fxyhc"]
 [ext_resource type="Script" path="res://scripts/shop.gd" id="2_ksl7k"]
 [ext_resource type="PackedScene" uid="uid://bvifxs3kcux8a" path="res://actors/return.tscn" id="2_q3uoe"]
 [ext_resource type="PackedScene" uid="uid://brd2ta0t0382y" path="res://actors/config.tscn" id="3_oe1ic"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dg2fxq1v4w0iv" path="res://sprites/UI/coin1_16x16.png" id="5_x7gsh"]
 [ext_resource type="Texture2D" uid="uid://c4mse58sfbl26" path="res://sprites/UI/RightArrow.png" id="6_07bou"]
 [ext_resource type="Texture2D" uid="uid://c480fshiyyrur" path="res://sprites/UI/EmptyButton.png" id="9_newke"]
+[ext_resource type="Texture2D" uid="uid://i1olku3hbp8o" path="res://sprites/Others/shop_border.png" id="9_olidg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q427l"]
 atlas = ExtResource("5_x7gsh")
@@ -180,19 +181,33 @@ animations = [{
 [node name="CanvasLayer" type="CanvasLayer"]
 
 [node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
 offset_right = 900.0
 offset_bottom = 1600.0
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_pqh4j")
+texture = ExtResource("1_fxyhc")
 stretch_mode = 6
+
+[node name="ShopTitle" type="Label" parent="."]
+texture_filter = 1
+offset_left = 36.0
+offset_top = 20.5
+offset_right = 56.0
+offset_bottom = 26.5
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_ip5my")
+theme_override_font_sizes/font_size = 4
+text = "Loja"
+metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 2.0
-offset_top = 6.0
+offset_top = 2.0
 offset_right = -4.0
+offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -202,7 +217,7 @@ layout_mode = 2
 script = ExtResource("2_ksl7k")
 
 [node name="Buttons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(80, 15)
+custom_minimum_size = Vector2(80, 20)
 layout_mode = 2
 alignment = 1
 
@@ -257,6 +272,12 @@ texture_normal = ExtResource("6_07bou")
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 
+[node name="BorderContent" type="Sprite2D" parent="MarginContainer/VBoxContainer/ContentArea"]
+texture_filter = 1
+position = Vector2(43, 22)
+scale = Vector2(1.604, 1.02)
+texture = ExtResource("9_olidg")
+
 [node name="Character" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ContentArea"]
 custom_minimum_size = Vector2(30, 60)
 layout_mode = 2
@@ -277,6 +298,12 @@ layout_mode = 2
 [node name="ContentText" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ContentArea"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer/VBoxContainer/ContentArea/ContentText"]
+visible = false
+texture_filter = 1
+position = Vector2(25, 22)
+texture = ExtResource("9_olidg")
 
 [node name="PowerTitle" type="Label" parent="MarginContainer/VBoxContainer/ContentArea/ContentText"]
 texture_filter = 1
