@@ -433,15 +433,19 @@ func swap_tiles(tile_src: int, tile_dst: int, type_caller: String) -> void:
 		if is_solved():
 			print("Resolvido")
 			Global.CoinsEd =(100-(60 - time_left()[1]))
-			Global.Coins += (Global.CoinsEd)
 			#60 segundos, realiza a soma das moedas em questao ao tempo gasto quanto mais tempo gasto menos moedas
-			#gera 10 moedas assim que o player acabar a fase
+			
 			#Evita que ao completar novamente niveis mais baixo libere os mais acima
-			if Global.current_level - 1 == Global.higher_level_completed:
-				Global.higher_level_completed += 1
-				print(Global.higher_level_completed)
-			elif Global.current_level == 11:
+			if Global.current_level - 1 == Global.higher_level_completed and Global.current_level != 11:
+				Global.higher_level_completed += 1 
+			elif Global.current_level != 11: #Ignora para os niveis infinitos
+				Global.CoinsEd /= 10 #Caso o nivel seja rejogado a recompensa é menor
+			
+			if Global.current_level == 11:
 				Global.infinite_level += 1
+				
+			Global.Coins += (Global.CoinsEd)
+			Global.save_game()
 			#Carregar a cena no inicio do nivel evita queda de FPS, quando ela é mudada
 			get_tree().change_scene_to_packed(CHEST_SCENE)
 			#get_tree().change_scene_to_file("res://scenes/chest_scene.tscn")

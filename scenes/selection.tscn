@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://0mlmgp1fuime"]
 
 [ext_resource type="Script" path="res://sprites/Tiles/select.gd" id="1_61ffd"]
-[ext_resource type="PackedScene" uid="uid://cqmd1qmmodljl" path="res://actors/Char_Hood.tscn" id="1_fiabd"]
 [ext_resource type="Texture2D" uid="uid://chjospyhrxfhj" path="res://sprites/Bordas.png" id="2_x25if"]
+[ext_resource type="PackedScene" uid="uid://bh6p3mk2qusbn" path="res://actors/Char_Owlet.tscn" id="3_0os21"]
 [ext_resource type="Texture2D" uid="uid://b7o01ine17uvt" path="res://sprites/BG/Background.jpeg" id="4_a0638"]
-[ext_resource type="PackedScene" uid="uid://dl54xhkraoptj" path="res://actors/Char_Florest.tscn" id="5_08yoy"]
+[ext_resource type="PackedScene" uid="uid://dkynuc0gp5em3" path="res://Char_PinkMonster.tscn" id="5_8ymne"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iyi4a"]
 atlas = ExtResource("2_x25if")
@@ -32,45 +32,45 @@ size = Vector2(37, 36)
 [node name="Select" type="Area2D"]
 script = ExtResource("1_61ffd")
 
-[node name="Crimson" type="Area2D" parent="."]
+[node name="Owlet" type="Area2D" parent="."]
 position = Vector2(-3, 30)
 
-[node name="Border" type="AnimatedSprite2D" parent="Crimson"]
+[node name="Border" type="AnimatedSprite2D" parent="Owlet"]
 texture_filter = 1
 position = Vector2(26, 80)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_d5eaf")
 
-[node name="Character" parent="Crimson" instance=ExtResource("1_fiabd")]
-position = Vector2(26, 80)
+[node name="Player" parent="Owlet" instance=ExtResource("3_0os21")]
+position = Vector2(26, 76)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Crimson"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Owlet"]
 position = Vector2(25.5, 80.5)
 shape = SubResource("RectangleShape2D_r5yo7")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="Crimson"]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Owlet"]
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="Crimson/ParallaxBackground"]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Owlet/ParallaxBackground"]
 
-[node name="SelectionBg" type="Sprite2D" parent="Crimson/ParallaxBackground/ParallaxLayer"]
+[node name="SelectionBg" type="Sprite2D" parent="Owlet/ParallaxBackground/ParallaxLayer"]
 texture_filter = 1
 position = Vector2(45.125, 80.9687)
 scale = Vector2(0.124653, 0.126611)
 texture = ExtResource("4_a0638")
 
-[node name="Hickory" type="Area2D" parent="."]
+[node name="Zinnia" type="Area2D" parent="."]
 position = Vector2(-1, 30)
 script = SubResource("GDScript_ryvyu")
 
-[node name="Border" type="AnimatedSprite2D" parent="Hickory"]
+[node name="Border" type="AnimatedSprite2D" parent="Zinnia"]
 texture_filter = 1
 position = Vector2(66, 80)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_d5eaf")
 
-[node name="Character" parent="Hickory" instance=ExtResource("5_08yoy")]
-position = Vector2(65, 77)
+[node name="Player" parent="Zinnia" instance=ExtResource("5_8ymne")]
+position = Vector2(66, 77)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hickory"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Zinnia"]
 position = Vector2(65.5, 80)
 shape = SubResource("RectangleShape2D_l0k26")

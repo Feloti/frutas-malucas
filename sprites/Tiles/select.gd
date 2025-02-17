@@ -1,5 +1,7 @@
 extends Area2D
 
+@onready var LEVEL_MAP:PackedScene = preload("res://scenes/level_map.tscn")
+
 func _ready():
 	for child in get_children():
 		if child.get_class() == 'Area2D':
@@ -10,4 +12,5 @@ func _on_character_clicked(viewport, event, shape_idx, character_id):
 		print(character_id)
 		Global.selected_character = character_id
 		
-		get_tree().change_scene_to_file("res://scenes/level_map.tscn")
+		Global.save_game()
+		get_tree().change_scene_to_packed(LEVEL_MAP)
