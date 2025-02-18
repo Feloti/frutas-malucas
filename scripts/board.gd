@@ -432,8 +432,8 @@ func swap_tiles(tile_src: int, tile_dst: int, type_caller: String) -> void:
 	if type_caller == "Player":
 		if is_solved():
 			print("Resolvido")
-			Global.CoinsEd =(100-(60 - time_left()[1]))
-			#60 segundos, realiza a soma das moedas em questao ao tempo gasto quanto mais tempo gasto menos moedas
+			#Calcula a recompensa de moedas com base nas porcetagem do tempo restante
+			Global.CoinsEd = int((time_left()[0] * 60 + time_left()[1]) / time_to_finish * 100)
 			
 			#Evita que ao completar novamente niveis mais baixo libere os mais acima
 			if Global.current_level - 1 == Global.higher_level_completed and Global.current_level != 11:
